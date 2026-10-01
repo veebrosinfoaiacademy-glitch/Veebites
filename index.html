@@ -1,0 +1,1892 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VeeBites — Restaurant POS &amp; Operations Platform</title>
+  <meta name="description" content="VeeBites brings orders, tables, kitchen operations, payments, inventory, staff, accounting, and analytics into one connected restaurant management platform.">
+  <meta name="theme-color" content="#041A3A">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="VeeBites — Run Your Entire Restaurant From One Connected POS">
+  <meta property="og:description" content="Orders, tables, kitchen, payments, inventory, staff, accounting, and analytics in one restaurant operations platform.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Inter+Tight:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+
+<!-- Icon sprite (kept renderable — gradients break inside display:none SVGs) -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="lg-accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF8A1E"/>
+      <stop offset=".5" stop-color="#FE660B"/>
+      <stop offset="1" stop-color="#E0300A"/>
+    </linearGradient>
+  </defs>
+  <!-- VeeBites app icon: the "V" from the wordmark with a fork for its right arm -->
+  <symbol id="logo-mark" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="9" fill="url(#lg-accent)"/>
+    <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8.6 8.6 14.6 22.8" stroke-width="3.3"/>
+      <g transform="translate(14.6 22.8) rotate(24)">
+        <path d="M0 0V-8.6" stroke-width="3.3"/>
+        <path d="M-2.8 -15.2V-10.9A2.8 2.8 0 0 0 2.8 -10.9V-15.2" stroke-width="1.7"/>
+        <path d="M0 -15.2V-9.4" stroke-width="1.7"/>
+      </g>
+    </g>
+  </symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 3h14v18l-2.5-1.6L14 21l-2-1.6L10 21l-2.5-1.6L5 21z"/><path d="M9 8h6M9 12h6M9 16h3"/></symbol>
+  <symbol id="i-chef" viewBox="0 0 24 24"><path d="M17 21a1 1 0 0 0 1-1v-5.35c0-.46.32-.84.73-1.04a4 4 0 0 0-2.14-7.59 5 5 0 0 0-9.18 0 4 4 0 0 0-2.14 7.59c.41.2.73.58.73 1.04V20a1 1 0 0 0 1 1Z"/><path d="M6 17h12"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="m7.5 4.27 9 5.15"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-landmark" viewBox="0 0 24 24"><path d="M3 22h18"/><path d="M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="M12 2 20 7H4z"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/><path d="M20 3v4M22 5h-4"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.86a10 10 0 0 1 14 0"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/></symbol>
+  <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/><path d="M5 12.86a10 10 0 0 1 5.17-2.69"/><path d="M19 12.86a10 10 0 0 0-2-1.52"/><path d="M2 8.82a15 15 0 0 1 4.18-2.64"/><path d="M22 8.82a15 15 0 0 0-11.29-3.76"/><path d="m2 2 20 20"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M6 16.5V8a3 3 0 0 1 3-3h6.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3V7.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7.5"/><path d="m20.5 20.5-4.2-4.2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="m8.5 12.5 2.5 2.5 5-5.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.8-9.8"/><path d="m15.5 7.5 3 3"/><path d="m18 5 2 2"/></symbol>
+  <symbol id="i-user-check" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></symbol>
+  <symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></symbol>
+  <symbol id="i-file-check" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5M9 8V2M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20M6 15h4"/></symbol>
+  <symbol id="i-bike" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol>
+  <symbol id="i-utensils" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M10 2v2M14 2v2M6 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20v2.5a2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0Z"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-network" viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-calendar-x" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m14 14-4 4M10 14l4 4"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></symbol>
+  <symbol id="i-contact" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v2M8 2v2"/><circle cx="12" cy="11" r="3"/><path d="M7 22v-1a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></symbol>
+  <symbol id="i-book-open" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.38 3.62a1 1 0 0 1 3 3L7.37 18.64a2 2 0 0 1-.86.5l-2.87.84a.5.5 0 0 1-.62-.62l.84-2.87a2 2 0 0 1 .5-.86z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 6h.01M3 12h.01M3 18h.01M8 6h13M8 12h13M8 18h13"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+  <symbol id="i-cashflow" viewBox="0 0 24 24"><path d="m17 3 4 4-4 4"/><path d="M21 7H9"/><path d="m7 21-4-4 4-4"/><path d="M3 17h12"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8M7 12h10M7 16h6"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.54 21.69a.5.5 0 0 0 .94-.03l6.5-19a.5.5 0 0 0-.64-.64l-19 6.5a.5.5 0 0 0-.02.94l7.93 3.18a2 2 0 0 1 1.11 1.11z"/><path d="m21.85 2.15-10.94 10.94"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></symbol>
+  <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><path d="M10 2h4M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M2 14h4M10 8h4M18 16h4"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1M12 18h1M7 18h1"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7h.01M6 17h.01"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol>
+  <symbol id="i-percent" viewBox="0 0 24 24"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============================== NAVIGATION ============================== -->
+<header class="nav" data-nav>
+  <div class="container nav-inner">
+    <a class="brand" href="#top" aria-label="VeeBites — back to top">
+      <img class="brand-logo" src="assets/img/veebites-logo.png" alt="VeeBites" width="150" height="38">
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#platform">Product</a>
+      <a href="#features">Features</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#integrations">Integrations</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">Resources</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="nav-signin" href="#signin">Sign In</a>
+      <a class="btn btn-primary btn-sm" href="#demo" data-demo>Book a Demo</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-nav-toggle>
+        <svg class="i i-open" aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="i i-close" aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+    <nav class="container" aria-label="Mobile">
+      <a href="#platform">Product</a>
+      <a href="#features">Features</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#integrations">Integrations</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">Resources</a>
+      <div class="mobile-menu-ctas">
+        <a class="btn btn-secondary btn-lg" href="#signin">Sign In</a>
+        <a class="btn btn-primary btn-lg" href="#demo" data-demo>Book a Demo</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================================= HERO ================================= -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <p class="eyebrow eyebrow--pill"><span class="eyebrow-dot" aria-hidden="true"></span>Restaurant Operations Platform</p>
+    <h1 class="hero-title" id="hero-title">Run Your Entire Restaurant<br class="br-md"> From <span class="text-accent">One Connected POS.</span></h1>
+    <p class="hero-sub">VeeBites brings orders, tables, kitchen operations, payments, inventory, staff, accounting, and analytics into one powerful restaurant management platform.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary btn-lg" href="#demo" data-demo>Book a Demo <svg class="i i-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+      <a class="btn btn-ghost-dark btn-lg" href="#platform">Explore Features</a>
+    </div>
+    <p class="hero-trust">Built for restaurants, cafes, cloud kitchens, food courts, and growing multi-location businesses.</p>
+
+    <ol class="flow-ribbon" aria-label="One connected flow: orders, kitchen, payments, inventory, people, accounting, analytics">
+      <li><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg>Orders</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-chef"/></svg>Kitchen</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-card"/></svg>Payments</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-box"/></svg>Inventory</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-users"/></svg>People</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-landmark"/></svg>Accounting</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Analytics</li>
+    </ol>
+  </div>
+
+  <div class="container hero-visual">
+    <!-- KPI cards shown on small screens in place of the floating cards -->
+    <div class="hero-kpis" aria-hidden="true">
+      <div class="hk"><span>Today's sales</span><b>₹1,84,250</b></div>
+      <div class="hk"><span>Orders</span><b>426</b></div>
+      <div class="hk"><span>Active tables</span><b>28 / 42</b></div>
+      <div class="hk"><span>Low stock</span><b>17 items</b></div>
+    </div>
+
+    <div class="mock-scroll" data-mock-scroll>
+      <div class="mock hero-stage" role="img" aria-label="VeeBites service overview: floor plan with active tables, live orders with order and payment status, kitchen tickets, low-stock alert, and today's sales — shown with demo data.">
+        <div class="app hero-app">
+          <div class="app-top">
+            <div class="app-brand"><svg aria-hidden="true"><use href="#logo-mark"/></svg><b>VeeBites</b></div>
+            <span class="app-sep"></span>
+            <span class="app-crumb">Main Branch <span class="app-crumb-dim">/ Service</span></span>
+            <span class="app-status">Online · Synced</span>
+            <div class="seg app-top-seg"><span class="on">Floor</span><span>Orders</span><span>Kitchen</span><span>Reports</span></div>
+            <div class="app-top-r">
+              <span class="app-clock">13:42</span>
+              <span class="app-ibtn"><svg class="i"><use href="#i-search"/></svg></span>
+              <span class="app-ibtn has-dot"><svg class="i"><use href="#i-bell"/></svg></span>
+              <span class="app-avatar">AK</span>
+            </div>
+          </div>
+          <div class="app-body">
+            <div class="app-rail">
+              <span><svg class="i"><use href="#i-grid"/></svg></span>
+              <span class="on"><svg class="i"><use href="#i-layout"/></svg></span>
+              <span><svg class="i"><use href="#i-receipt"/></svg></span>
+              <span><svg class="i"><use href="#i-chef"/></svg></span>
+              <span><svg class="i"><use href="#i-box"/></svg></span>
+              <span><svg class="i"><use href="#i-users"/></svg></span>
+              <span><svg class="i"><use href="#i-landmark"/></svg></span>
+              <span><svg class="i"><use href="#i-chart"/></svg></span>
+              <span><svg class="i"><use href="#i-sparkles"/></svg></span>
+              <span class="rail-end"><svg class="i"><use href="#i-sliders"/></svg></span>
+            </div>
+            <div class="app-main">
+              <div class="hm-head">
+                <div>
+                  <div class="hm-title">Service overview</div>
+                  <div class="ac-meta">Wed, 30 Sep · Lunch service</div>
+                </div>
+                <div class="hm-head-r">
+                  <div class="seg"><span class="on">Ground floor</span><span>First floor</span><span>Terrace</span></div>
+                  <span class="mbtn mbtn--accent"><svg class="i"><use href="#i-plus"/></svg>New order</span>
+                </div>
+              </div>
+
+              <div class="hm-grid">
+                <!-- Floor plan -->
+                <div class="app-card hm-floor">
+                  <div class="ac-head">
+                    <div><span class="ac-title">Ground floor</span> <span class="ac-meta">· 9 of 13 tables active · 42 covers</span></div>
+                  </div>
+                  <div class="fp">
+                    <div class="fp-zone fp-host"><span>Host</span></div>
+                    <div class="fp-zone fp-bar"><span>Bar</span></div>
+                    <div class="tb tb--occ" style="left:3%;top:7%;width:12%;height:20%"><b>T1</b><small>4 · 42m</small></div>
+                    <div class="tb tb--bill" style="left:3%;top:40%;width:12%;height:20%"><b>T2</b><small>Billing</small></div>
+                    <div class="tb tb--round tb--occ" style="left:20%;top:7%;width:9%;height:20%"><b>T3</b><small>2 · 12m</small></div>
+                    <div class="tb tb--round tb--free" style="left:20%;top:40%;width:9%;height:20%"><b>T4</b><small>2</small></div>
+                    <div class="tb tb--round tb--occ" style="left:20%;top:73%;width:9%;height:20%"><b>T5</b><small>2 · 8m</small></div>
+                    <div class="tb tb--occ tb--sel" style="left:34%;top:7%;width:12.5%;height:20%"><b>T7</b><small>4 · 26m</small></div>
+                    <div class="tb tb--res" style="left:34%;top:40%;width:12.5%;height:20%"><b>T8</b><small>Res 14:00</small></div>
+                    <div class="tb tb--occ" style="left:34%;top:73%;width:30%;height:20%"><b>T11</b><small>8 · 51m</small></div>
+                    <div class="tb tb--occ" style="left:51.5%;top:7%;width:12.5%;height:20%"><b>T9</b><small>3 · 34m</small></div>
+                    <div class="tb tb--free" style="left:51.5%;top:40%;width:12.5%;height:20%"><b>T10</b><small>4 seats</small></div>
+                    <div class="tb tb--bill" style="left:69%;top:7%;width:12.5%;height:20%"><b>T12</b><small>Billing</small></div>
+                    <div class="tb tb--free" style="left:69%;top:40%;width:12.5%;height:20%"><b>T6</b><small>4 seats</small></div>
+                    <div class="tb tb--occ" style="left:69%;top:73%;width:12.5%;height:20%"><b>T13</b><small>5 · 19m</small></div>
+                  </div>
+                  <div class="fp-legend">
+                    <span><i class="lg lg-free"></i>Available</span>
+                    <span><i class="lg lg-occ"></i>Occupied</span>
+                    <span><i class="lg lg-bill"></i>Billing</span>
+                    <span><i class="lg lg-res"></i>Reserved</span>
+                    <span class="fp-legend-sel"><i class="lg lg-sel"></i>Selected</span>
+                  </div>
+                </div>
+
+                <!-- Live orders -->
+                <div class="app-card hm-orders">
+                  <div class="ac-head">
+                    <div><span class="ac-title">Live orders</span> <span class="count-badge">18 active</span></div>
+                    <div class="mini-tabs"><span class="on">All</span><span>Dine-in</span><span>Takeaway</span><span>Delivery</span></div>
+                  </div>
+                  <ul class="ol">
+                    <li><div class="ol-l"><b>#1043 · T-09</b><span>Dine-in · 3 items · 1m</span></div><div class="ol-r"><b>₹1,106</b><span class="ol-pills"><span class="pill pill--new">New</span><span class="pill pill--due">Unpaid</span></span></div></li>
+                    <li><div class="ol-l"><b>#1042 · T-07</b><span>Dine-in · 5 items · 9m</span></div><div class="ol-r"><b>₹1,860</b><span class="ol-pills"><span class="pill pill--prep">Preparing</span><span class="pill pill--due">Unpaid</span></span></div></li>
+                    <li><div class="ol-l"><b>#1041 · Takeaway</b><span>Counter · 2 items · 11m</span></div><div class="ol-r"><b>₹540</b><span class="ol-pills"><span class="pill pill--ready">Ready</span><span class="pill pill--paid">Paid · UPI</span></span></div></li>
+                    <li><div class="ol-l"><b>#1040 · Delivery</b><span>Online order · 2 items · 16m</span></div><div class="ol-r"><b>₹920</b><span class="ol-pills"><span class="pill pill--prep">Preparing</span><span class="pill pill--paid">Paid · Online</span></span></div></li>
+                    <li><div class="ol-l"><b>#1039 · T-12</b><span>Dine-in · 8 items · 48m</span></div><div class="ol-r"><b>₹2,480</b><span class="ol-pills"><span class="pill pill--done">Served</span><span class="pill pill--bill">Billing</span></span></div></li>
+                    <li><div class="ol-l"><b>#1038 · T-02</b><span>Dine-in · 4 items · 52m</span></div><div class="ol-r"><b>₹1,315</b><span class="ol-pills"><span class="pill pill--done">Served</span><span class="pill pill--bill">Split · 2/3</span></span></div></li>
+                  </ul>
+                </div>
+
+                <!-- Kitchen tickets -->
+                <div class="app-card hm-kitchen">
+                  <div class="ac-head">
+                    <div><span class="ac-title">Kitchen</span> <span class="ac-meta">· 6 tickets in prep</span></div>
+                    <div class="mini-tabs"><span class="on">All stations</span><span>Tandoor</span><span>Biryani</span><span>Bar</span></div>
+                  </div>
+                  <div class="mt-row">
+                    <div class="mt mt--prep">
+                      <div class="mt-h"><b>#1042</b><span class="mt-time">08:14</span></div>
+                      <div class="mt-meta">T-07 · Tandoor</div>
+                      <ul><li><b>2×</b> Paneer Tikka</li><li><b>3×</b> Garlic Naan</li></ul>
+                      <div class="mt-bar"><i style="width:72%"></i></div>
+                    </div>
+                    <div class="mt mt--late">
+                      <div class="mt-h"><b>#1040</b><span class="mt-time">12:40</span></div>
+                      <div class="mt-meta">Delivery · Biryani</div>
+                      <ul><li><b>1×</b> Chicken Biryani</li><li><b>1×</b> Raita</li></ul>
+                      <div class="mt-bar"><i style="width:100%"></i></div>
+                    </div>
+                    <div class="mt mt--new">
+                      <div class="mt-h"><b>#1043</b><span class="mt-time">00:52</span></div>
+                      <div class="mt-meta">T-09 · Biryani · Bar</div>
+                      <ul><li><b>2×</b> Chicken Biryani</li><li><b>2×</b> Mango Lassi</li></ul>
+                      <div class="mt-bar"><i style="width:8%"></i></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Side: stock + payments -->
+                <div class="hm-side">
+                  <div class="app-card hm-stock">
+                    <div class="ac-head">
+                      <div class="hm-alert"><svg class="i"><use href="#i-alert"/></svg><span class="ac-title">Low stock</span></div>
+                      <span class="ac-meta">17 items below par</span>
+                    </div>
+                    <ul class="stock-mini">
+                      <li><span>Paneer</span><span class="meter"><i style="width:42%"></i></span><em>2.1 / 5 kg</em></li>
+                      <li><span>Basmati rice</span><span class="meter"><i style="width:40%"></i></span><em>8 / 20 kg</em></li>
+                      <li><span>Fresh cream</span><span class="meter meter--crit"><i style="width:28%"></i></span><em>1.1 / 4 L</em></li>
+                    </ul>
+                  </div>
+                  <div class="app-card hm-pay">
+                    <div class="ac-head">
+                      <span class="ac-title">Payments today</span>
+                      <span class="ac-meta">Settled ₹1,72,410 · Pending ₹11,840</span>
+                    </div>
+                    <div class="stackbar"><i class="s1" style="width:46%"></i><i class="s2" style="width:38%"></i><i class="s3" style="width:16%"></i></div>
+                    <div class="stack-legend"><span><i class="s1"></i>Card 46%</span><span><i class="s2"></i>UPI 38%</span><span><i class="s3"></i>Cash 16%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating KPI cards -->
+        <div class="float-card fc-sales">
+          <span class="fc-label"><svg class="i"><use href="#i-trend"/></svg>Today's sales</span>
+          <b class="fc-value" data-count="184250" data-format="inr" data-prefix="₹">₹1,84,250</b>
+          <span class="fc-sub"><em class="up">+8.2%</em> vs last Wednesday</span>
+          <svg class="fc-spark" viewBox="0 0 120 32" preserveAspectRatio="none" data-spark="18,22,20,26,24,30,28,34,31,38,36,44"></svg>
+        </div>
+        <div class="float-card fc-orders">
+          <span class="fc-label"><svg class="i"><use href="#i-receipt"/></svg>Orders</span>
+          <b class="fc-value" data-count="426">426</b>
+          <span class="fc-sub">238 dine-in · 94 takeaway · 94 delivery</span>
+        </div>
+        <div class="float-card fc-tables">
+          <span class="fc-label"><svg class="i"><use href="#i-layout"/></svg>Active tables</span>
+          <b class="fc-value"><span data-count="28">28</span> <span class="fc-dim">/ 42</span></b>
+          <span class="fc-meter"><i style="width:66.7%"></i></span>
+        </div>
+        <div class="float-card fc-stock">
+          <span class="fc-label fc-label--warn"><svg class="i"><use href="#i-alert"/></svg>Low stock</span>
+          <b class="fc-value"><span data-count="17">17</span> <span class="fc-dim">items</span></b>
+          <span class="fc-sub">Purchase order suggested</span>
+        </div>
+      </div>
+    </div>
+    <p class="demo-note">Product interface shown with illustrative demo data.</p>
+  </div>
+</section>
+
+<!-- ============================ CAPABILITY STRIP ============================ -->
+<section class="capabilities" aria-label="Platform scope">
+  <div class="container">
+    <ul class="cap-grid">
+      <li data-reveal><span class="cap-value" data-count="15" data-suffix="+">15+</span><span class="cap-label">Core operations</span></li>
+      <li data-reveal><span class="cap-value" data-count="10" data-suffix="+">10+</span><span class="cap-label">Connected modules</span></li>
+      <li data-reveal><span class="cap-value" data-count="30" data-suffix="+">30+</span><span class="cap-label">Restaurant workflows</span></li>
+      <li data-reveal><span class="cap-value cap-value--text">Offline + Online</span><span class="cap-label">Hybrid front-of-house</span></li>
+      <li data-reveal><span class="cap-value cap-value--text">Multi-Service</span><span class="cap-label">Architecture</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================ PROBLEM ================================ -->
+<section class="section section--paper" id="problem" aria-labelledby="problem-title">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow">The problem</p>
+      <h2 class="h2" id="problem-title">Running a restaurant shouldn't mean running five different systems.</h2>
+      <p class="lead">Billing in one app. Kitchen tickets on paper. Inventory in a spreadsheet. Payroll, accounting, and reporting somewhere else again. Every handoff between them is a manual step — a re-typed order, an exported file, a number that doesn't quite match.</p>
+    </div>
+
+    <div class="compare">
+      <div class="cmp cmp--frag" data-reveal>
+        <div class="cmp-head">
+          <span class="cmp-kicker">Fragmented operations</span>
+          <span class="cmp-tag">6 separate tools</span>
+        </div>
+        <ul class="frag-grid">
+          <li style="--r:-1.5deg"><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg><b>Billing</b><span>Standalone app</span></li>
+          <li style="--r:1.2deg"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg><b>Spreadsheet Inventory</b><span>Updated by hand</span></li>
+          <li style="--r:.8deg"><svg class="i" aria-hidden="true"><use href="#i-file-text"/></svg><b>Manual Kitchen Tickets</b><span>Paper KOTs</span></li>
+          <li style="--r:-1deg"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg><b>Separate Payroll</b><span>Different vendor</span></li>
+          <li style="--r:1.6deg"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg><b>Manual Accounting</b><span>Re-entered weekly</span></li>
+          <li style="--r:-.7deg"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg><b>Disconnected Reports</b><span>Exported &amp; merged</span></li>
+        </ul>
+        <ul class="cmp-foot cmp-foot--bad">
+          <li><svg class="i" aria-hidden="true"><use href="#i-x"/></svg>Data re-entered between systems</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-x"/></svg>No single view of the day</li>
+        </ul>
+      </div>
+
+      <div class="cmp-arrow" aria-hidden="true"><svg class="i"><use href="#i-arrow-right"/></svg></div>
+
+      <div class="cmp cmp--posr" data-reveal>
+        <div class="cmp-head">
+          <span class="cmp-kicker"><svg class="cmp-logo" aria-hidden="true"><use href="#logo-mark"/></svg>VeeBites</span>
+          <span class="cmp-tag cmp-tag--good">One connected system</span>
+        </div>
+        <div class="hub" aria-label="VeeBites connects POS, Kitchen, Inventory, HR and Payroll, Accounting, and Analytics">
+          <svg class="hub-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M50 50 L24 16"/><path d="M50 50 L76 16"/><path d="M50 50 L86 50"/>
+            <path d="M50 50 L76 84"/><path d="M50 50 L24 84"/><path d="M50 50 L14 50"/>
+          </svg>
+          <div class="hub-core"><svg aria-hidden="true"><use href="#logo-mark"/></svg><span>VeeBites</span></div>
+          <span class="hub-node" style="--x:24%;--y:16%"><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg>POS</span>
+          <span class="hub-node" style="--x:76%;--y:16%"><svg class="i" aria-hidden="true"><use href="#i-chef"/></svg>Kitchen</span>
+          <span class="hub-node" style="--x:86%;--y:50%"><svg class="i" aria-hidden="true"><use href="#i-box"/></svg>Inventory</span>
+          <span class="hub-node" style="--x:76%;--y:84%"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg>HR &amp; Payroll</span>
+          <span class="hub-node" style="--x:24%;--y:84%"><svg class="i" aria-hidden="true"><use href="#i-landmark"/></svg>Accounting</span>
+          <span class="hub-node" style="--x:14%;--y:50%"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Analytics</span>
+        </div>
+        <ul class="cmp-foot cmp-foot--good">
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Shared data across modules</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>One view of the whole operation</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="problem-kicker" data-reveal>VeeBites connects the entire operation into one system.</p>
+  </div>
+</section>
+
+<!-- =============================== PLATFORM =============================== -->
+<section class="section" id="platform" aria-labelledby="platform-title">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow">The platform</p>
+      <h2 class="h2" id="platform-title">One Platform. Every Part of Your Restaurant.</h2>
+      <p class="lead">Six connected areas that share the same operational data — from the first order of the day to the month-end report.</p>
+    </div>
+
+    <div class="pgrid">
+      <article class="pcard" data-reveal>
+        <div class="pcard-head"><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg></span><h3>Front of House</h3></div>
+        <p>Orders, tables, payments, discounts, taxes, receipts.</p>
+        <div class="pv" aria-hidden="true">
+          <div class="pv-receipt">
+            <div class="pvr-h"><b>T-07 · Dine-in</b><span>4 covers</span></div>
+            <div class="pvr-l"><span>Paneer Tikka × 1</span><span>₹280</span></div>
+            <div class="pvr-l"><span>Garlic Naan × 3</span><span>₹210</span></div>
+            <div class="pvr-l"><span>Mango Lassi × 2</span><span>₹240</span></div>
+            <div class="pvr-l pvr-dim"><span>Discount 10% · GST 5%</span><span>−₹40</span></div>
+            <div class="pvr-t"><span>Total</span><b>₹690</b></div>
+            <div class="pvr-pay"><span class="on">Card</span><span>UPI</span><span>Cash</span><span>Split</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-reveal>
+        <div class="pcard-head"><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-chef"/></svg></span><h3>Kitchen</h3></div>
+        <p>KDS, stations, tickets, prep-time tracking, order workflow.</p>
+        <div class="pv" aria-hidden="true">
+          <div class="pv-tickets">
+            <div class="pvt pvt--prep"><div class="pvt-h"><b>#101</b><span>07:32</span></div><em>Café</em><span>1× Pasta</span><span>2× Coffee</span><i class="pvt-bar"><i style="width:75%"></i></i></div>
+            <div class="pvt pvt--new"><div class="pvt-h"><b>#104</b><span>00:48</span></div><em>Grill</em><span>2× Burger</span><span>1× Fries</span><i class="pvt-bar"><i style="width:10%"></i></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-reveal>
+        <div class="pcard-head"><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-box"/></svg></span><h3>Inventory</h3></div>
+        <p>Purchasing, suppliers, recipes, production, waste, transfers.</p>
+        <div class="pv" aria-hidden="true">
+          <ul class="pv-stock">
+            <li><span>Basmati rice</span><i class="pvm pvm--warn"><i style="width:40%"></i></i><em>8 / 20 kg</em></li>
+            <li><span>Paneer</span><i class="pvm pvm--warn"><i style="width:42%"></i></i><em>2.1 / 5 kg</em></li>
+            <li><span>Fresh cream</span><i class="pvm pvm--crit"><i style="width:28%"></i></i><em>1.1 / 4 L</em></li>
+            <li><span>Tomatoes</span><i class="pvm"><i style="width:88%"></i></i><em>14 / 16 kg</em></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="pcard" data-reveal>
+        <div class="pcard-head"><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span><h3>People</h3></div>
+        <p>Employees, attendance, scheduling, leave, payroll.</p>
+        <div class="pv" aria-hidden="true">
+          <div class="pv-sched">
+            <div class="pvs-axis"><span>10:00</span><span>14:00</span><span>18:00</span><span>22:00</span></div>
+            <div class="pvs-row"><span class="pvs-n">Anita</span><span class="pvs-track"><i class="foh" style="left:0;width:60%"></i></span></div>
+            <div class="pvs-row"><span class="pvs-n">Rahul</span><span class="pvs-track"><i class="kit" style="left:8%;width:62%"></i></span></div>
+            <div class="pvs-row"><span class="pvs-n">Farah</span><span class="pvs-track"><i class="foh" style="left:40%;width:60%"></i></span></div>
+            <div class="pvs-row"><span class="pvs-n">Joel</span><span class="pvs-track"><i class="bar" style="left:50%;width:50%"></i></span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-reveal>
+        <div class="pcard-head"><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-landmark"/></svg></span><h3>Finance</h3></div>
+        <p>Accounts, journals, P&amp;L, balance sheet, cash flow.</p>
+        <div class="pv" aria-hidden="true">
+          <ul class="pv-pl">
+            <li><span>Revenue</span><i><i style="width:100%"></i></i><em>₹48.6L</em></li>
+            <li><span>COGS</span><i><i style="width:31%"></i></i><em>₹15.2L</em></li>
+            <li><span>Labor</span><i><i style="width:24%"></i></i><em>₹11.7L</em></li>
+            <li><span>Operating</span><i><i style="width:18%"></i></i><em>₹8.9L</em></li>
+            <li class="net"><span>Net</span><i><i style="width:26%"></i></i><em>₹12.8L</em></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="pcard" data-reveal>
+        <div class="pcard-head"><span class="icon-box icon-box--purple"><svg class="i" aria-hidden="true"><use href="#i-sparkles"/></svg></span><h3>Intelligence</h3></div>
+        <p>Dashboards, reports, forecasting, AI-assisted analysis.</p>
+        <div class="pv" aria-hidden="true">
+          <div class="pv-ai">
+            <div class="pva-q"><svg class="i"><use href="#i-sparkles"/></svg>Top dishes this week?</div>
+            <div class="pva-bars"><i style="height:62%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:84%"></i><i class="hi" style="height:100%"></i><i style="height:78%"></i></div>
+            <div class="pva-a">Chicken Biryani leads with 11% of food sales.</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== WORKFLOW =============================== -->
+<section class="section section--dark workflow" id="workflow" aria-labelledby="workflow-title">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow">How it connects</p>
+      <h2 class="h2" id="workflow-title">From Order to Accounting — One Connected Flow</h2>
+      <p class="lead">Every order moves through the same system — so the kitchen, the stockroom, and the books all see the same activity.</p>
+    </div>
+
+    <ol class="flow" data-flow>
+      <li class="flow-step" style="--i:0">
+        <span class="flow-node"><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg></span>
+        <span class="flow-num">01</span><h3>Take Order</h3>
+        <p>Select table, dishes, modifiers, and order type.</p>
+        <span class="flow-tag">POS</span>
+      </li>
+      <li class="flow-step" style="--i:1">
+        <span class="flow-node"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg></span>
+        <span class="flow-num">02</span><h3>Send to Kitchen</h3>
+        <p>Automatically route items into the appropriate kitchen workflow.</p>
+        <span class="flow-tag">Routing</span>
+      </li>
+      <li class="flow-step" style="--i:2">
+        <span class="flow-node"><svg class="i" aria-hidden="true"><use href="#i-chef"/></svg></span>
+        <span class="flow-num">03</span><h3>Prepare</h3>
+        <p>Kitchen staff manage tickets by station and update preparation status.</p>
+        <span class="flow-tag">Kitchen display</span>
+      </li>
+      <li class="flow-step" style="--i:3">
+        <span class="flow-node"><svg class="i" aria-hidden="true"><use href="#i-utensils"/></svg></span>
+        <span class="flow-num">04</span><h3>Serve</h3>
+        <p>Completed items move through the customer order workflow.</p>
+        <span class="flow-tag">Order status</span>
+      </li>
+      <li class="flow-step" style="--i:4">
+        <span class="flow-node"><svg class="i" aria-hidden="true"><use href="#i-card"/></svg></span>
+        <span class="flow-num">05</span><h3>Pay</h3>
+        <p>Handle cash, cards, split payments, discounts, taxes, refunds, and receipts.</p>
+        <span class="flow-tag">Payments</span>
+      </li>
+      <li class="flow-step" style="--i:5">
+        <span class="flow-node"><svg class="i" aria-hidden="true"><use href="#i-box"/></svg></span>
+        <span class="flow-num">06</span><h3>Update Stock</h3>
+        <p>Connect sales with recipes and inventory movements.</p>
+        <span class="flow-tag">Inventory</span>
+      </li>
+      <li class="flow-step" style="--i:6">
+        <span class="flow-node"><svg class="i" aria-hidden="true"><use href="#i-landmark"/></svg></span>
+        <span class="flow-num">07</span><h3>Record Finance</h3>
+        <p>Connect operational activity with accounting workflows.</p>
+        <span class="flow-tag">Accounting</span>
+      </li>
+      <li class="flow-step" style="--i:7">
+        <span class="flow-node"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg></span>
+        <span class="flow-num">08</span><h3>Analyze</h3>
+        <p>Use dashboards, reports, and AI-assisted insights to understand performance.</p>
+        <span class="flow-tag">Analytics &amp; AI</span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================= FAST SERVICE ============================= -->
+<section class="section" id="features" aria-labelledby="service-title">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Built for service</p>
+      <h2 class="h2" id="service-title">Built For Busy Service</h2>
+      <p class="lead">When the restaurant gets busy, every second matters. VeeBites keeps the front of house moving — from the first tap to the printed KOT.</p>
+    </div>
+
+    <div class="service">
+      <div class="service-tabs" role="tablist" aria-label="Service features" aria-orientation="vertical" data-service-tabs>
+        <button class="stab" role="tab" type="button" id="stab-order" aria-selected="true" aria-controls="service-panel" data-state="order">
+          <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-zap"/></svg></span>
+          <span class="stab-txt"><b>Fast Order Taking</b><span>Quickly find dishes, apply modifiers, manage carts, and send orders directly to the kitchen.</span></span>
+        </button>
+        <button class="stab" role="tab" type="button" id="stab-station" aria-selected="false" aria-controls="service-panel" tabindex="-1" data-state="station">
+          <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg></span>
+          <span class="stab-txt"><b>Station-Based Kitchen Workflow</b><span>Route and manage kitchen tickets according to operational stations.</span></span>
+        </button>
+        <button class="stab" role="tab" type="button" id="stab-status" aria-selected="false" aria-controls="service-panel" tabindex="-1" data-state="status">
+          <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-activity"/></svg></span>
+          <span class="stab-txt"><b>Live Order Status</b><span>Keep staff and customers informed as orders move from preparation to completion.</span></span>
+        </button>
+        <button class="stab" role="tab" type="button" id="stab-print" aria-selected="false" aria-controls="service-panel" tabindex="-1" data-state="print">
+          <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-printer"/></svg></span>
+          <span class="stab-txt"><b>Local Printing</b><span>Print KOTs, bills, receipts, delivery slips, refunds, and summaries.</span></span>
+        </button>
+        <button class="stab" role="tab" type="button" id="stab-offline" aria-selected="false" aria-controls="service-panel" tabindex="-1" data-state="offline">
+          <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-wifi-off"/></svg></span>
+          <span class="stab-txt"><b>Offline-First Operation</b><span>Continue essential front-of-house workflows during network interruptions and synchronize when connectivity returns.</span></span>
+        </button>
+      </div>
+
+      <div class="service-visual" role="tabpanel" id="service-panel" aria-labelledby="stab-order">
+        <div class="mock-scroll" data-mock-scroll>
+          <div class="mock pos" style="--mw:48" data-pos data-state="order" role="img" aria-label="VeeBites order screen: menu categories, dish grid, and a cart with modifiers, discount, tax and total — demo data.">
+            <div class="app">
+              <div class="app-top">
+                <div class="app-brand"><svg aria-hidden="true"><use href="#logo-mark"/></svg><b>POS</b></div>
+                <span class="app-sep"></span>
+                <span class="app-crumb"><b>Order #1043</b> <span class="app-crumb-dim">· T-09 · 3 covers</span></span>
+                <div class="app-top-r">
+                  <div class="seg"><span class="on">Dine-in</span><span>Takeaway</span><span>Delivery</span></div>
+                  <span class="app-status pos-online">Online</span>
+                  <span class="app-status app-status--warn pos-offline">Local mode · 3 queued</span>
+                  <span class="app-avatar">FS</span>
+                </div>
+              </div>
+              <div class="pos-body">
+                <div class="pos-cats">
+                  <span class="on">All</span><span>Starters</span><span>Mains</span><span>Biryani</span><span>Breads</span><span>Beverages</span><span>Desserts</span>
+                </div>
+                <div class="pos-menu">
+                  <div class="pos-banner"><svg class="i"><use href="#i-wifi-off"/></svg><span>Network interrupted — essential ordering continues locally. Queued changes will sync when connectivity returns.</span></div>
+                  <div class="pos-search"><svg class="i"><use href="#i-search"/></svg><span>Search dishes or scan code</span><kbd>/</kbd></div>
+                  <div class="pos-grid">
+                    <div class="dish is-picked"><i class="veg nv"></i><b>Chicken Biryani</b><span>₹320</span><em class="qty">2</em></div>
+                    <div class="dish"><i class="veg"></i><b>Paneer Tikka</b><span>₹280</span></div>
+                    <div class="dish"><i class="veg nv"></i><b>Butter Chicken</b><span>₹340</span></div>
+                    <div class="dish"><i class="veg"></i><b>Veg Hakka Noodles</b><span>₹220</span></div>
+                    <div class="dish is-picked"><i class="veg"></i><b>Garlic Naan</b><span>₹70</span><em class="qty">3</em></div>
+                    <div class="dish"><i class="veg"></i><b>Masala Dosa</b><span>₹160</span></div>
+                    <div class="dish is-picked"><i class="veg"></i><b>Mango Lassi</b><span>₹120</span><em class="qty">2</em></div>
+                    <div class="dish"><i class="veg"></i><b>Cold Coffee</b><span>₹150</span></div>
+                    <div class="dish"><i class="veg"></i><b>Gulab Jamun</b><span>₹110</span></div>
+                  </div>
+                </div>
+                <div class="pos-cart">
+                  <div class="cart-h"><b>Current order</b><span>T-09 · Dine-in</span></div>
+                  <ul class="cart-lines">
+                    <li><div><b>Chicken Biryani</b><span>Medium spice · + Raita</span></div><span class="stepper"><i>−</i>2<i>+</i></span><em>₹720</em></li>
+                    <li><div><b>Garlic Naan</b><span>Butter brushed</span></div><span class="stepper"><i>−</i>3<i>+</i></span><em>₹210</em></li>
+                    <li><div><b>Mango Lassi</b><span>Less sugar</span></div><span class="stepper"><i>−</i>2<i>+</i></span><em>₹240</em></li>
+                  </ul>
+                  <div class="cart-tot">
+                    <div><span>Subtotal</span><span>₹1,170.00</span></div>
+                    <div><span>Discount · Lunch 10%</span><span>−₹117.00</span></div>
+                    <div><span>GST 5%</span><span>₹52.65</span></div>
+                    <div><span>Round off</span><span>₹0.35</span></div>
+                    <div class="grand"><span>Total</span><b>₹1,106.00</b></div>
+                  </div>
+                  <div class="cart-actions">
+                    <span class="mbtn mbtn--dark cart-send"><svg class="i"><use href="#i-chef"/></svg>Send to kitchen</span>
+                    <span class="mbtn mbtn--accent"><svg class="i"><use href="#i-card"/></svg>Pay</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- State overlays -->
+              <div class="pov pov-order">
+                <div class="pov-h"><b>Chicken Biryani</b><span>₹320</span></div>
+                <span class="pov-label">Spice level</span>
+                <div class="pov-chips"><span>Mild</span><span class="on">Medium</span><span>Hot</span></div>
+                <span class="pov-label">Add-ons</span>
+                <div class="pov-check on"><i></i>Raita <em>+₹40</em></div>
+                <div class="pov-check"><i></i>Extra salan <em>+₹30</em></div>
+                <span class="mbtn mbtn--accent pov-btn">Add to order · ₹360</span>
+              </div>
+              <div class="pov pov-station">
+                <div class="pov-h"><b>Routed to 3 stations</b><span>KOTs sent</span></div>
+                <ul class="pov-list">
+                  <li><svg class="i"><use href="#i-check-circle"/></svg><b>Biryani counter</b><span>2 items</span></li>
+                  <li><svg class="i"><use href="#i-check-circle"/></svg><b>Tandoor</b><span>3 items</span></li>
+                  <li><svg class="i"><use href="#i-check-circle"/></svg><b>Beverages</b><span>2 items</span></li>
+                </ul>
+              </div>
+              <div class="pov pov-status">
+                <div class="pov-h"><b>Order #1043</b><span>T-09</span></div>
+                <ol class="pov-steps"><li class="done">Placed</li><li class="now">Preparing</li><li>Ready</li><li>Served</li></ol>
+                <ul class="pov-list pov-list--status">
+                  <li><b>Chicken Biryani × 2</b><span class="pill pill--prep">Preparing</span></li>
+                  <li><b>Garlic Naan × 3</b><span class="pill pill--ready">Ready</span></li>
+                  <li><b>Mango Lassi × 2</b><span class="pill pill--ready">Ready</span></li>
+                </ul>
+              </div>
+              <div class="pov pov-print">
+                <div class="pov-toast"><svg class="i"><use href="#i-printer"/></svg><div><b>KOT #1043 printed</b><span>Kitchen printer 1 · Tandoor</span></div><svg class="i ok"><use href="#i-check"/></svg></div>
+                <div class="pov-toast"><svg class="i"><use href="#i-printer"/></svg><div><b>Bill ready to print</b><span>Counter printer</span></div></div>
+                <div class="pov-docs"><span>KOT</span><span>Bill</span><span>Receipt</span><span>Delivery slip</span><span>Refund</span><span>Summary</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ KITCHEN DISPLAY ============================ -->
+<section class="section section--dark kds-section" id="kitchen" aria-labelledby="kds-title">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow">Kitchen display</p>
+      <h2 class="h2" id="kds-title">Give Your Kitchen a Live View of Service.</h2>
+      <p class="lead">Tickets arrive by station the moment an order is sent. Cooks see what's new, what's cooking, and what's waiting at the pass — with timers that make delays obvious.</p>
+    </div>
+
+    <div class="mock-scroll" data-mock-scroll data-reveal>
+      <div class="mock kds" style="--mw:75" data-kds role="img" aria-label="VeeBites kitchen display with New, Preparing, and Ready columns. Each ticket shows order number, items, quantities, elapsed time, station, and a status control — demo data.">
+        <div class="app app--dark">
+          <div class="app-top">
+            <div class="app-brand"><svg aria-hidden="true"><use href="#logo-mark"/></svg><b>Kitchen</b></div>
+            <span class="app-sep"></span>
+            <div class="kds-stations"><span class="on">All stations</span><span>Grill</span><span>Tandoor</span><span>Wok</span><span>Café</span><span>Beverages</span></div>
+            <div class="app-top-r">
+              <span class="kds-stat">Avg prep <b>08:40</b></span>
+              <span class="kds-stat">Recall <b data-kds-recall>12</b></span>
+              <span class="app-clock" data-clock>13:42</span>
+              <span class="mbtn"><svg class="i"><use href="#i-rotate"/></svg>Recall</span>
+            </div>
+          </div>
+          <div class="kds-cols">
+            <div class="kds-col" data-col="new">
+              <div class="kds-col-h kds-col-h--new"><b>New</b><span data-kds-count>2</span></div>
+              <div class="kds-list">
+                <article class="tk" data-state="new" data-elapsed="48" data-target="600">
+                  <header class="tk-h"><b class="tk-no">#104</b><span class="tk-time">00:48</span></header>
+                  <div class="tk-meta"><span>Dine-in · T-05</span><span class="tk-st"><svg class="i"><use href="#i-flame"/></svg>Grill</span></div>
+                  <ul class="tk-items"><li><b>2 ×</b> Burger</li><li><b>1 ×</b> Fries</li></ul>
+                  <div class="tk-bar"><i></i></div>
+                  <span class="tk-btn">Start</span>
+                </article>
+                <article class="tk" data-state="new" data-elapsed="21" data-target="480">
+                  <header class="tk-h"><b class="tk-no">#105</b><span class="tk-time">00:21</span></header>
+                  <div class="tk-meta"><span>Takeaway</span><span class="tk-st"><svg class="i"><use href="#i-flame"/></svg>Wok</span></div>
+                  <ul class="tk-items"><li><b>1 ×</b> Veg Hakka Noodles</li><li><b>1 ×</b> Chilli Paneer <em>Less spicy</em></li></ul>
+                  <div class="tk-bar"><i></i></div>
+                  <span class="tk-btn">Start</span>
+                </article>
+              </div>
+            </div>
+            <div class="kds-col" data-col="prep">
+              <div class="kds-col-h kds-col-h--prep"><b>Preparing</b><span data-kds-count>3</span></div>
+              <div class="kds-list">
+                <article class="tk" data-state="prep" data-elapsed="452" data-target="600">
+                  <header class="tk-h"><b class="tk-no">#101</b><span class="tk-time">07:32</span></header>
+                  <div class="tk-meta"><span>Dine-in · T-12</span><span class="tk-st"><svg class="i"><use href="#i-coffee"/></svg>Café</span></div>
+                  <ul class="tk-items"><li><b>1 ×</b> Pasta</li><li><b>2 ×</b> Coffee</li></ul>
+                  <div class="tk-bar"><i></i></div>
+                  <span class="tk-btn">Mark ready</span>
+                </article>
+                <article class="tk" data-state="prep" data-elapsed="665" data-target="600">
+                  <header class="tk-h"><b class="tk-no">#102</b><span class="tk-time">11:05</span></header>
+                  <div class="tk-meta"><span>Delivery</span><span class="tk-st"><svg class="i"><use href="#i-flame"/></svg>Biryani</span></div>
+                  <ul class="tk-items"><li><b>1 ×</b> Chicken Biryani</li><li><b>1 ×</b> Raita</li></ul>
+                  <div class="tk-bar"><i></i></div>
+                  <span class="tk-btn">Mark ready</span>
+                </article>
+                <article class="tk" data-state="prep" data-elapsed="250" data-target="420">
+                  <header class="tk-h"><b class="tk-no">#103</b><span class="tk-time">04:10</span></header>
+                  <div class="tk-meta"><span>Dine-in · T-03</span><span class="tk-st"><svg class="i"><use href="#i-flame"/></svg>Tandoor</span></div>
+                  <ul class="tk-items"><li><b>3 ×</b> Garlic Naan</li></ul>
+                  <div class="tk-bar"><i></i></div>
+                  <span class="tk-btn">Mark ready</span>
+                </article>
+              </div>
+            </div>
+            <div class="kds-col" data-col="ready">
+              <div class="kds-col-h kds-col-h--ready"><b>Ready</b><span data-kds-count>2</span></div>
+              <div class="kds-list">
+                <article class="tk" data-state="ready" data-elapsed="704" data-target="900">
+                  <header class="tk-h"><b class="tk-no">#098</b><span class="tk-time">11:44</span></header>
+                  <div class="tk-meta"><span>Dine-in · T-08</span><span class="tk-st"><svg class="i"><use href="#i-flame"/></svg>Pizza</span></div>
+                  <ul class="tk-items"><li><b>2 ×</b> Pizza</li><li><b>2 ×</b> Coke</li></ul>
+                  <div class="tk-bar"><i></i></div>
+                  <span class="tk-btn">Bump</span>
+                </article>
+                <article class="tk" data-state="ready" data-elapsed="538" data-target="600">
+                  <header class="tk-h"><b class="tk-no">#099</b><span class="tk-time">08:58</span></header>
+                  <div class="tk-meta"><span>Takeaway</span><span class="tk-st"><svg class="i"><use href="#i-flame"/></svg>Dosa</span></div>
+                  <ul class="tk-items"><li><b>1 ×</b> Masala Dosa</li><li><b>1 ×</b> Filter Coffee</li></ul>
+                  <div class="tk-bar"><i></i></div>
+                  <span class="tk-btn">Bump</span>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="demo-note demo-note--dark">Demo data. Tickets advance automatically — click any ticket to move it along.</p>
+
+    <ul class="kds-caps">
+      <li data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg></span><b>Station-based tickets</b><span>Each station sees only the items it needs to prepare.</span></li>
+      <li data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-activity"/></svg></span><b>Ticket status</b><span>Move tickets from new to preparing to ready in one tap.</span></li>
+      <li data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-timer"/></svg></span><b>Prep-time tracking</b><span>Elapsed timers highlight tickets running past target.</span></li>
+      <li data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-rotate"/></svg></span><b>Completed-order recall</b><span>Bring back a bumped ticket when something needs a second look.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================== CUSTOMER ORDER DISPLAY ======================== -->
+<section class="section section--paper" id="order-display" aria-labelledby="cod-title">
+  <div class="container split split--cod">
+    <div class="split-copy" data-reveal>
+      <p class="eyebrow">Customer order display</p>
+      <h2 class="h2" id="cod-title">Keep Customers in the Loop.</h2>
+      <p class="lead">A customer-facing screen for counters, pickup points, and food courts. Guests see when their order is preparing and when it's ready to collect — so staff spend less time answering "is mine ready?"</p>
+
+      <div class="cod-controls" data-cod-controls>
+        <div class="ctrl">
+          <span class="ctrl-label" id="cod-status-label">Order status</span>
+          <div class="segctl" role="radiogroup" aria-labelledby="cod-status-label" data-filter="status">
+            <button type="button" role="radio" aria-checked="true" data-value="all">All</button>
+            <button type="button" role="radio" aria-checked="false" data-value="preparing">Preparing</button>
+            <button type="button" role="radio" aria-checked="false" data-value="ready">Ready</button>
+            <button type="button" role="radio" aria-checked="false" data-value="completed">Completed</button>
+          </div>
+        </div>
+        <div class="ctrl">
+          <span class="ctrl-label" id="cod-type-label">Order type</span>
+          <div class="segctl" role="radiogroup" aria-labelledby="cod-type-label" data-filter="type">
+            <button type="button" role="radio" aria-checked="true" data-value="all">All</button>
+            <button type="button" role="radio" aria-checked="false" data-value="dine">Dine-in</button>
+            <button type="button" role="radio" aria-checked="false" data-value="take">Takeaway</button>
+            <button type="button" role="radio" aria-checked="false" data-value="deliv">Delivery</button>
+          </div>
+        </div>
+        <p class="ctrl-hint">Try the filters — the display updates as you choose.</p>
+      </div>
+    </div>
+
+    <div class="split-visual" data-reveal>
+      <div class="screen">
+        <div class="screen-bezel">
+          <div class="mock-scroll" data-mock-scroll>
+            <div class="mock cod" style="--mw:44" data-cod data-status="all" data-type="all" role="img" aria-label="Customer order display showing order numbers under Preparing, Ready, and Completed — demo data.">
+              <div class="cod-top">
+                <div class="app-brand"><svg aria-hidden="true"><use href="#logo-mark"/></svg><b>Order status</b></div>
+                <span class="cod-where">Pickup · Counter 2</span>
+                <span class="cod-clock" data-clock>13:42</span>
+              </div>
+              <div class="cod-cols">
+                <div class="cod-col cod-col--prep" data-col="preparing">
+                  <div class="cod-col-h"><span class="cod-dot"></span>Preparing</div>
+                  <div class="cod-tiles">
+                    <span class="ct" data-type="take"><b>112</b><em>Takeaway</em></span>
+                    <span class="ct" data-type="dine"><b>113</b><em>Dine-in</em></span>
+                    <span class="ct" data-type="deliv"><b>114</b><em>Delivery</em></span>
+                    <span class="ct" data-type="take"><b>115</b><em>Takeaway</em></span>
+                    <span class="ct" data-type="dine"><b>116</b><em>Dine-in</em></span>
+                    <span class="ct" data-type="take"><b>117</b><em>Takeaway</em></span>
+                  </div>
+                </div>
+                <div class="cod-col cod-col--ready" data-col="ready">
+                  <div class="cod-col-h"><span class="cod-dot"></span>Ready</div>
+                  <div class="cod-tiles">
+                    <span class="ct ct--fresh" data-type="take"><b>111</b><em>Takeaway</em></span>
+                    <span class="ct" data-type="deliv"><b>110</b><em>Delivery</em></span>
+                    <span class="ct" data-type="dine"><b>109</b><em>Dine-in</em></span>
+                    <span class="ct" data-type="take"><b>108</b><em>Takeaway</em></span>
+                  </div>
+                </div>
+                <div class="cod-col cod-col--done" data-col="completed">
+                  <div class="cod-col-h"><span class="cod-dot"></span>Completed</div>
+                  <div class="cod-tiles">
+                    <span class="ct" data-type="dine"><b>107</b><em>Dine-in</em></span>
+                    <span class="ct" data-type="take"><b>106</b><em>Takeaway</em></span>
+                    <span class="ct" data-type="deliv"><b>105</b><em>Delivery</em></span>
+                    <span class="ct" data-type="take"><b>104</b><em>Takeaway</em></span>
+                    <span class="ct" data-type="dine"><b>103</b><em>Dine-in</em></span>
+                  </div>
+                </div>
+              </div>
+              <div class="cod-foot">Please collect your order from Counter 2 when your number appears under <b>Ready</b>.</div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-stand" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== OFFLINE-FIRST ============================== -->
+<section class="section offline" id="offline" aria-labelledby="offline-title">
+  <div class="offline-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="sec-head sec-head--center offline-head" data-reveal>
+      <p class="eyebrow">Offline-first front of house</p>
+      <h2 class="h2 h2--xl" id="offline-title">Your Restaurant Shouldn't Stop Because the Internet Does.</h2>
+      <p class="lead">VeeBites is designed with offline-first front-of-house workflows so essential ordering can continue during network interruptions, with synchronization when connectivity returns.</p>
+    </div>
+
+    <div class="off" data-offline data-active="online">
+      <div class="off-signal" aria-hidden="true">
+        <span class="sig sig--on"><em>Connected</em></span>
+        <span class="sig sig--off"><em>Network interruption</em></span>
+        <span class="sig sig--back"><em>Reconnected</em></span>
+        <i class="sig-marker"></i>
+      </div>
+
+      <div class="off-stages">
+        <article class="off-stage" data-stage="online">
+          <div class="off-top">
+            <span class="off-badge off-badge--on"><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg>Online</span>
+            <span class="off-num">01</span>
+          </div>
+          <h3>Online</h3>
+          <p>Orders processed normally.</p>
+          <div class="off-ui" aria-hidden="true">
+            <div class="ou-row"><b>#1041</b><span>Takeaway · ₹540</span><em class="ou-ok"><svg class="i"><use href="#i-check"/></svg>Synced</em></div>
+            <div class="ou-row"><b>#1042</b><span>T-07 · ₹1,860</span><em class="ou-ok"><svg class="i"><use href="#i-check"/></svg>Synced</em></div>
+            <div class="ou-row"><b>#1043</b><span>T-09 · ₹1,106</span><em class="ou-ok"><svg class="i"><use href="#i-check"/></svg>Synced</em></div>
+          </div>
+        </article>
+
+        <div class="off-link" aria-hidden="true"><svg class="i"><use href="#i-arrow-right"/></svg></div>
+
+        <article class="off-stage" data-stage="local">
+          <div class="off-top">
+            <span class="off-badge off-badge--local"><svg class="i" aria-hidden="true"><use href="#i-wifi-off"/></svg>Local mode</span>
+            <span class="off-num">02</span>
+          </div>
+          <h3>Local Mode</h3>
+          <p>Essential POS work continues locally.</p>
+          <div class="off-ui" aria-hidden="true">
+            <div class="ou-row ou-q" style="--d:0"><b>#1044</b><span>T-04 · ₹860</span><em class="ou-wait"><svg class="i"><use href="#i-clock"/></svg>Queued</em></div>
+            <div class="ou-row ou-q" style="--d:1"><b>#1045</b><span>Takeaway · ₹390</span><em class="ou-wait"><svg class="i"><use href="#i-clock"/></svg>Queued</em></div>
+            <div class="ou-row ou-q" style="--d:2"><b>#1046</b><span>T-10 · ₹1,420</span><em class="ou-wait"><svg class="i"><use href="#i-clock"/></svg>Queued</em></div>
+          </div>
+        </article>
+
+        <div class="off-link" aria-hidden="true"><svg class="i"><use href="#i-arrow-right"/></svg></div>
+
+        <article class="off-stage" data-stage="sync">
+          <div class="off-top">
+            <span class="off-badge off-badge--sync"><svg class="i" aria-hidden="true"><use href="#i-sync"/></svg>Sync</span>
+            <span class="off-num">03</span>
+          </div>
+          <h3>Sync</h3>
+          <p>Queued changes synchronize when connectivity returns.</p>
+          <div class="off-ui" aria-hidden="true">
+            <div class="ou-sync">
+              <div class="ou-sync-h"><span>Synchronizing queued changes</span><b>3 / 3</b></div>
+              <div class="ou-prog"><i></i></div>
+            </div>
+            <div class="ou-row"><b>Queue</b><span>3 orders · 2 payments</span><em class="ou-ok"><svg class="i"><use href="#i-check"/></svg>Up to date</em></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <p class="off-note" data-reveal><svg class="i" aria-hidden="true"><use href="#i-alert"/></svg>Offline support covers essential front-of-house workflows. Capabilities that depend on connected services — such as external integrations, cross-location reporting, and AI-assisted analysis — resume once connectivity returns.</p>
+  </div>
+</section>
+
+<!-- ================================ INVENTORY ================================ -->
+<section class="section" id="inventory" aria-labelledby="inv-title">
+  <div class="container">
+    <div class="sec-head sec-head--split" data-reveal>
+      <div>
+        <p class="eyebrow">Inventory</p>
+        <h2 class="h2" id="inv-title">Know What's in Stock, What's Moving, and What Needs Attention.</h2>
+      </div>
+      <p class="lead">Sales connect to recipes, recipes connect to stock, and stock connects to purchasing — so low items, waste, and transfers surface before they become a problem during service.</p>
+    </div>
+
+    <div class="mock-scroll" data-mock-scroll data-reveal>
+      <div class="mock inv" style="--mw:75" role="img" aria-label="VeeBites inventory dashboard with stock value, low stock, purchase orders, waste, transfers, production batches, a low-stock table, waste by category, and stock movement — example data.">
+        <div class="app">
+          <div class="app-top">
+            <div class="app-brand"><svg aria-hidden="true"><use href="#logo-mark"/></svg><b>VeeBites</b></div>
+            <span class="app-sep"></span>
+            <span class="app-crumb">Inventory <span class="app-crumb-dim">/ Overview</span></span>
+            <div class="app-top-r">
+              <span class="demo-chip">Example data</span>
+              <div class="seg"><span>Today</span><span>Week</span><span class="on">Month</span></div>
+              <span class="mbtn mbtn--accent"><svg class="i"><use href="#i-plus"/></svg>Purchase order</span>
+              <span class="app-avatar">AK</span>
+            </div>
+          </div>
+          <div class="app-body">
+            <div class="app-rail">
+              <span><svg class="i"><use href="#i-grid"/></svg></span>
+              <span><svg class="i"><use href="#i-layout"/></svg></span>
+              <span><svg class="i"><use href="#i-receipt"/></svg></span>
+              <span><svg class="i"><use href="#i-chef"/></svg></span>
+              <span class="on"><svg class="i"><use href="#i-box"/></svg></span>
+              <span><svg class="i"><use href="#i-users"/></svg></span>
+              <span><svg class="i"><use href="#i-landmark"/></svg></span>
+              <span><svg class="i"><use href="#i-chart"/></svg></span>
+              <span><svg class="i"><use href="#i-sparkles"/></svg></span>
+            </div>
+            <div class="app-main">
+              <div class="kpi-row kpi-row--6">
+                <div class="kpi"><span class="kpi-label">Stock value</span><b class="kpi-value" data-count="4.82" data-decimals="2" data-prefix="₹" data-suffix="L">₹4.82L</b><span class="kpi-sub">Across all storage</span></div>
+                <div class="kpi kpi--warn"><span class="kpi-label"><svg class="i"><use href="#i-alert"/></svg>Low stock</span><b class="kpi-value" data-count="17">17</b><span class="kpi-sub">Below par level</span></div>
+                <div class="kpi"><span class="kpi-label">Purchase orders</span><b class="kpi-value" data-count="12">12</b><span class="kpi-sub">4 awaiting delivery</span></div>
+                <div class="kpi"><span class="kpi-label">Waste this month</span><b class="kpi-value" data-count="18.4" data-decimals="1" data-prefix="₹" data-suffix="K">₹18.4K</b><span class="kpi-sub">5 categories</span></div>
+                <div class="kpi"><span class="kpi-label">Pending transfers</span><b class="kpi-value" data-count="6">6</b><span class="kpi-sub">2 inbound today</span></div>
+                <div class="kpi"><span class="kpi-label">Production batches</span><b class="kpi-value" data-count="24">24</b><span class="kpi-sub">This month</span></div>
+              </div>
+
+              <div class="inv-grid">
+                <div class="app-card inv-table">
+                  <div class="ac-head"><span class="ac-title">Low stock items</span><span class="ac-meta">Sorted by urgency</span></div>
+                  <table class="mtable">
+                    <thead><tr><th>Item</th><th>On hand</th><th>Par</th><th class="w-meter">Level</th><th>Supplier</th><th></th></tr></thead>
+                    <tbody>
+                      <tr><td><b>Fresh cream</b></td><td>1.1 L</td><td>4 L</td><td><span class="meter meter--crit"><i style="width:28%"></i></span></td><td>Northside Dairy</td><td><span class="tlink">Reorder</span></td></tr>
+                      <tr><td><b>Basmati rice</b></td><td>8 kg</td><td>20 kg</td><td><span class="meter"><i style="width:40%"></i></span></td><td>Valley Grains</td><td><span class="tlink">Reorder</span></td></tr>
+                      <tr><td><b>Tomatoes</b></td><td>4 kg</td><td>10 kg</td><td><span class="meter"><i style="width:40%"></i></span></td><td>Greenleaf Produce</td><td><span class="tlink">Reorder</span></td></tr>
+                      <tr><td><b>Paneer</b></td><td>2.1 kg</td><td>5 kg</td><td><span class="meter"><i style="width:42%"></i></span></td><td>Northside Dairy</td><td><span class="tlink">Reorder</span></td></tr>
+                      <tr><td><b>Chicken (boneless)</b></td><td>6 kg</td><td>12 kg</td><td><span class="meter"><i style="width:50%"></i></span></td><td>Metro Meats</td><td><span class="pill pill--new">On PO</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="app-card">
+                  <div class="ac-head"><span class="ac-title">Waste by category</span><span class="ac-meta">This month · ₹</span></div>
+                  <div class="chart" data-chart="hbar" data-values="Vegetables:6200,Dairy:4100,Meat:3800,Bakery:2400,Other:1900" data-format="k"></div>
+                </div>
+                <div class="app-card inv-move">
+                  <div class="ac-head">
+                    <span class="ac-title">Stock movement</span>
+                    <div class="legend"><span><i class="lg-sq s1"></i>Received</span><span><i class="lg-sq s2"></i>Consumed</span></div>
+                  </div>
+                  <div class="chart" data-chart="groupbar" data-labels="Thu,Fri,Sat,Sun,Mon,Tue,Wed" data-series="Received:62,18,44,12,71,20,38|Consumed:48,52,63,58,50,55,52" data-unit="₹K"></div>
+                </div>
+                <div class="app-card">
+                  <div class="ac-head"><span class="ac-title">Recent activity</span><span class="ac-meta">Today</span></div>
+                  <ul class="feed">
+                    <li><span class="feed-i fi-good"><svg class="i"><use href="#i-truck"/></svg></span><div><b>PO-2231 received</b><span>Northside Dairy · 14 items</span></div><em>13:20</em></li>
+                    <li><span class="feed-i fi-info"><svg class="i"><use href="#i-cashflow"/></svg></span><div><b>Transfer TR-118 pending</b><span>Central kitchen → Main Branch</span></div><em>12:45</em></li>
+                    <li><span class="feed-i fi-acc"><svg class="i"><use href="#i-factory"/></svg></span><div><b>Batch PB-0924 produced</b><span>Makhani gravy · 12 L</span></div><em>11:30</em></li>
+                    <li><span class="feed-i fi-warn"><svg class="i"><use href="#i-trash"/></svg></span><div><b>Waste logged</b><span>Tomatoes · 1.2 kg · Spoilage</span></div><em>10:05</em></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="demo-note demo-note--light">Values shown are example data for illustration.</p>
+
+    <ul class="chips" aria-label="Inventory capabilities" data-reveal>
+      <li><svg class="i" aria-hidden="true"><use href="#i-box"/></svg>Stock</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-truck"/></svg>Suppliers</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-cart"/></svg>Purchasing</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-rotate"/></svg>Returns</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-trash"/></svg>Waste</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-sliders"/></svg>Adjustments</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-cashflow"/></svg>Transfers</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-book-open"/></svg>Recipes</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-factory"/></svg>Production</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-utensils"/></svg>Buffet</li>
+      <li><svg class="i" aria-hidden="true"><use href="#i-scale"/></svg>Reconciliation</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========================== MANAGEMENT DASHBOARD ========================== -->
+<section class="section section--paper" id="analytics" aria-labelledby="dash-title">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow">Management dashboard</p>
+      <h2 class="h2" id="dash-title">See What's Happening Across Your Restaurant at a Glance.</h2>
+      <p class="lead">Sales, orders, service mix, top products, stock alerts, and table occupancy — on one screen, updated as service happens.</p>
+    </div>
+
+    <div class="mock-scroll" data-mock-scroll data-reveal>
+      <div class="mock dash" style="--mw:75">
+        <div class="app">
+          <div class="app-top">
+            <div class="app-brand"><svg aria-hidden="true"><use href="#logo-mark"/></svg><b>VeeBites</b></div>
+            <span class="app-sep"></span>
+            <span class="app-crumb">Reports <span class="app-crumb-dim">/ Dashboard</span></span>
+            <div class="app-top-r">
+              <span class="demo-chip">Demo data</span>
+              <div class="seg"><span class="on">Today</span><span>7 days</span><span>30 days</span></div>
+              <span class="mbtn">Main Branch <svg class="i"><use href="#i-chevron-down"/></svg></span>
+              <span class="app-avatar">AK</span>
+            </div>
+          </div>
+          <div class="app-body">
+            <div class="app-rail" aria-hidden="true">
+              <span><svg class="i"><use href="#i-grid"/></svg></span>
+              <span><svg class="i"><use href="#i-layout"/></svg></span>
+              <span><svg class="i"><use href="#i-receipt"/></svg></span>
+              <span><svg class="i"><use href="#i-chef"/></svg></span>
+              <span><svg class="i"><use href="#i-box"/></svg></span>
+              <span><svg class="i"><use href="#i-users"/></svg></span>
+              <span><svg class="i"><use href="#i-landmark"/></svg></span>
+              <span class="on"><svg class="i"><use href="#i-chart"/></svg></span>
+              <span><svg class="i"><use href="#i-sparkles"/></svg></span>
+            </div>
+            <div class="app-main">
+              <div class="kpi-row kpi-row--4">
+                <div class="kpi kpi--hero">
+                  <span class="kpi-label">Today's sales</span>
+                  <b class="kpi-value" data-count="184250" data-format="inr" data-prefix="₹">₹1,84,250</b>
+                  <span class="kpi-sub"><em class="up">+8.2%</em> vs last Wednesday</span>
+                  <svg class="kpi-spark" viewBox="0 0 120 32" preserveAspectRatio="none" data-spark="18,22,20,26,24,30,28,34,31,38,36,44" aria-hidden="true"></svg>
+                </div>
+                <div class="kpi"><span class="kpi-label">Orders</span><b class="kpi-value" data-count="426">426</b><span class="kpi-sub"><em class="up">+5.4%</em> vs last Wednesday</span></div>
+                <div class="kpi"><span class="kpi-label">Average order value</span><b class="kpi-value" data-count="432" data-prefix="₹">₹432</b><span class="kpi-sub"><em class="up">+2.6%</em> vs last Wednesday</span></div>
+                <div class="kpi">
+                  <span class="kpi-label">Active tables</span>
+                  <b class="kpi-value"><span data-count="28">28</span> <span class="kpi-dim">/ 42</span></b>
+                  <span class="meter meter--info"><i style="width:66.7%"></i></span>
+                </div>
+              </div>
+
+              <div class="dash-grid">
+                <div class="app-card dash-trend">
+                  <div class="ac-head">
+                    <div class="trend-tabs" role="tablist" aria-label="Trend metric" data-trend-tabs>
+                      <button type="button" role="tab" aria-selected="true" data-metric="sales">Sales trend</button>
+                      <button type="button" role="tab" aria-selected="false" data-metric="orders" tabindex="-1">Order volume</button>
+                    </div>
+                    <span class="ac-meta">Last 14 days</span>
+                  </div>
+                  <div class="chart chart--line" data-chart="line" data-trend
+                       data-labels="17 Sep,18 Sep,19 Sep,20 Sep,21 Sep,22 Sep,23 Sep,24 Sep,25 Sep,26 Sep,27 Sep,28 Sep,29 Sep,30 Sep"
+                       data-sales="152000,148000,161000,170000,196000,214000,188000,158000,150000,166000,175000,203000,221000,184250"
+                       data-orders="352,340,371,390,452,488,431,365,348,384,402,466,507,426"></div>
+                </div>
+
+                <div class="app-card dash-type">
+                  <div class="ac-head"><span class="ac-title">Order type</span><span class="ac-meta">426 orders</span></div>
+                  <div class="type-bar" aria-hidden="true"><i class="s1" style="flex:238"></i><i class="s2" style="flex:94"></i><i class="s3" style="flex:94"></i></div>
+                  <ul class="type-list">
+                    <li><i class="lg-sq s1"></i><span>Dine-in</span><b data-count="238">238</b><em>56%</em></li>
+                    <li><i class="lg-sq s2"></i><span>Takeaway</span><b data-count="94">94</b><em>22%</em></li>
+                    <li><i class="lg-sq s3"></i><span>Delivery</span><b data-count="94">94</b><em>22%</em></li>
+                  </ul>
+                  <div class="type-aov">
+                    <span class="kpi-label">Average order value by type</span>
+                    <div><span><em>Dine-in</em><b>₹512</b></span><span><em>Takeaway</em><b>₹318</b></span><span><em>Delivery</em><b>₹346</b></span></div>
+                  </div>
+                </div>
+
+                <div class="app-card dash-hourly">
+                  <div class="ac-head"><span class="ac-title">Hourly sales</span><span class="ac-meta">11:00 – 22:00 · ₹</span></div>
+                  <div class="chart" data-chart="columns" data-labels="11,12,13,14,15,16,17,18,19,20,21,22" data-values="8400,17900,24600,19200,8100,6300,7800,12400,21700,27300,23450,7100" data-highlight="9"></div>
+                </div>
+
+                <div class="app-card dash-mix">
+                  <div class="ac-head"><span class="ac-title">Product mix</span><span class="ac-meta">Revenue today</span></div>
+                  <div class="chart" data-chart="hbar" data-values="Chicken Biryani:20480,Butter Chicken:15640,Paneer Tikka:12320,Masala Dosa:9280,Mango Lassi:7560" data-format="inr" data-first-accent></div>
+                </div>
+
+                <div class="dash-side">
+                  <div class="app-card dash-top">
+                    <span class="kpi-label">Top product</span>
+                    <b class="dash-top-name">Chicken Biryani</b>
+                    <span class="kpi-sub">64 sold · ₹20,480</span>
+                  </div>
+                  <div class="app-card dash-alert">
+                    <span class="kpi-label"><svg class="i"><use href="#i-alert"/></svg>Low stock alerts</span>
+                    <b class="kpi-value" data-count="17">17</b>
+                    <span class="kpi-sub">3 critical · 14 below par</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="demo-note demo-note--light">UI demonstration values — not figures from VeeBites customers.</p>
+  </div>
+</section>
+
+<!-- =============================== HR & PAYROLL =============================== -->
+<section class="section" id="people" aria-labelledby="hr-title">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">People</p>
+      <h2 class="h2" id="hr-title">Manage Your Team Beyond the Timesheet.</h2>
+      <p class="lead">Schedules, attendance, leave, and payroll live next to the operation they support — so the people side of the restaurant runs on the same system as the service.</p>
+    </div>
+
+    <div class="split split--mock-left">
+      <div class="split-visual" data-reveal>
+        <div class="mock-scroll" data-mock-scroll>
+          <div class="mock hr" style="--mw:44" role="img" aria-label="VeeBites people dashboard: staff on shift, weekly schedule by department, today's attendance, and a payroll run in review — demo data.">
+            <div class="app">
+              <div class="app-top">
+                <div class="app-brand"><svg aria-hidden="true"><use href="#logo-mark"/></svg><b>People</b></div>
+                <span class="app-sep"></span>
+                <div class="seg"><span class="on">Schedule</span><span>Attendance</span><span>Payroll</span></div>
+                <div class="app-top-r"><span class="demo-chip">Demo data</span><span class="ac-meta">Week of 29 Sep</span></div>
+              </div>
+              <div class="app-main">
+                <div class="kpi-row kpi-row--4 kpi-row--compact">
+                  <div class="kpi"><span class="kpi-label">On shift now</span><b class="kpi-value">18</b></div>
+                  <div class="kpi"><span class="kpi-label">Scheduled today</span><b class="kpi-value">24</b></div>
+                  <div class="kpi"><span class="kpi-label">On leave</span><b class="kpi-value">2</b></div>
+                  <div class="kpi"><span class="kpi-label">Open shifts</span><b class="kpi-value">3</b></div>
+                </div>
+                <div class="app-card">
+                  <div class="ac-head">
+                    <span class="ac-title">Weekly schedule</span>
+                    <div class="legend"><span><i class="lg-sq s1"></i>Front of house</span><span><i class="lg-sq s2"></i>Kitchen</span><span><i class="lg-sq s3"></i>Bar</span><span><i class="lg-sq lg-leave"></i>Leave</span></div>
+                  </div>
+                  <div class="sched">
+                    <span class="sched-h"></span><span class="sched-h">Mon</span><span class="sched-h">Tue</span><span class="sched-h is-today">Wed</span><span class="sched-h">Thu</span><span class="sched-h">Fri</span><span class="sched-h">Sat</span><span class="sched-h">Sun</span>
+                    <span class="sched-n"><b>Anita K.</b><em>Server</em></span><i class="sh s1">10–18</i><i class="sh s1">10–18</i><i class="sh s1">10–18</i><i></i><i class="sh s1">14–22</i><i class="sh s1">14–22</i><i></i>
+                    <span class="sched-n"><b>Rahul M.</b><em>Chef de partie</em></span><i class="sh s2">09–17</i><i class="sh s2">09–17</i><i class="sh s2">12–22</i><i class="sh s2">12–22</i><i></i><i class="sh s2">12–22</i><i class="sh s2">12–22</i>
+                    <span class="sched-n"><b>Farah S.</b><em>Cashier</em></span><i></i><i class="sh s1">14–22</i><i class="sh s1">14–22</i><i class="sh s1">14–22</i><i class="sh s1">14–22</i><i class="sh s1">10–18</i><i></i>
+                    <span class="sched-n"><b>Vikram D.</b><em>Tandoor</em></span><i class="sh s2">12–22</i><i class="sh sh-leave">Leave</i><i class="sh sh-leave">Leave</i><i class="sh s2">12–22</i><i class="sh s2">12–22</i><i class="sh s2">12–22</i><i></i>
+                    <span class="sched-n"><b>Joel T.</b><em>Bartender</em></span><i></i><i></i><i class="sh s3">16–24</i><i class="sh s3">16–24</i><i class="sh s3">16–24</i><i class="sh s3">16–24</i><i class="sh s3">16–24</i>
+                  </div>
+                </div>
+                <div class="hr-bottom">
+                  <div class="app-card">
+                    <div class="ac-head"><span class="ac-title">Attendance today</span><span class="ac-meta">Clock-ins</span></div>
+                    <ul class="att">
+                      <li><span class="app-avatar av-sm">AK</span><b>Anita K.</b><em>09:56</em><span class="pill pill--ready">On time</span></li>
+                      <li><span class="app-avatar av-sm">RM</span><b>Rahul M.</b><em>12:04</em><span class="pill pill--ready">On time</span></li>
+                      <li><span class="app-avatar av-sm">FS</span><b>Farah S.</b><em>14:12</em><span class="pill pill--prep">Late 12m</span></li>
+                    </ul>
+                  </div>
+                  <div class="app-card">
+                    <div class="ac-head"><span class="ac-title">Payroll · September</span><span class="pill pill--new">In review</span></div>
+                    <ol class="steps"><li class="done">Draft</li><li class="now">Review</li><li>Approve</li><li>Paid</li></ol>
+                    <div class="pay-meta"><div><span>Employees</span><b>32</b></div><div><span>Period</span><b>1–30 Sep</b></div><div><span>Gross</span><b>₹11.70L</b></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fgrid fgrid--2">
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-contact"/></svg></span><h3>Employees</h3><p>Profiles, departments, positions.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-clipboard"/></svg></span><h3>Attendance</h3><p>Track employee attendance.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-calendar"/></svg></span><h3>Scheduling</h3><p>Manage shifts and staffing.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-calendar-x"/></svg></span><h3>Leave</h3><p>Manage leave and holidays.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg></span><h3>Payroll</h3><p>Pay profiles, rules, periods, and payroll runs.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-award"/></svg></span><h3>Performance</h3><p>Documents and performance notes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ ACCOUNTING ================================ -->
+<section class="section section--paper" id="accounting" aria-labelledby="acc-title">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Accounting</p>
+      <h2 class="h2" id="acc-title">Connect Daily Operations With Financial Visibility.</h2>
+      <p class="lead">From the first order of the day to the final financial report, VeeBites keeps operational and financial workflows connected.</p>
+    </div>
+
+    <div class="split split--mock-right">
+      <div class="fgrid fgrid--2">
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span><h3>Chart of Accounts</h3><p>Structure accounts for revenue, costs, assets, and liabilities.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg></span><h3>Journal Entries</h3><p>Record and review entries alongside activity from operations.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg></span><h3>General Ledger</h3><p>Trace balances and transactions account by account.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-scale"/></svg></span><h3>Trial Balance</h3><p>Check that debits and credits agree before closing a period.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-trend"/></svg></span><h3>Profit &amp; Loss</h3><p>See revenue, costs, and margins for any period.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-cashflow"/></svg></span><h3>Cash Flow</h3><p>Understand how cash moves through the business.</p></div>
+      </div>
+
+      <div class="split-visual" data-reveal>
+        <div class="mock-scroll" data-mock-scroll>
+          <div class="mock acc" style="--mw:44" role="img" aria-label="VeeBites profit and loss statement for September month-to-date and journal entries posted from POS, inventory, and payroll — demo data.">
+            <div class="app">
+              <div class="app-top">
+                <div class="app-brand"><svg aria-hidden="true"><use href="#logo-mark"/></svg><b>Finance</b></div>
+                <span class="app-sep"></span>
+                <span class="app-crumb">Profit &amp; loss <span class="app-crumb-dim">· Sep 2026 MTD</span></span>
+                <div class="app-top-r"><span class="demo-chip">Demo data</span><span class="mbtn"><svg class="i"><use href="#i-upload"/></svg>Export</span></div>
+              </div>
+              <div class="app-main">
+                <div class="kpi-row kpi-row--3 kpi-row--compact">
+                  <div class="kpi"><span class="kpi-label">Revenue</span><b class="kpi-value">₹48.6L</b></div>
+                  <div class="kpi"><span class="kpi-label">Gross margin</span><b class="kpi-value">68.7%</b></div>
+                  <div class="kpi"><span class="kpi-label">Net operating income</span><b class="kpi-value">₹12.8L</b></div>
+                </div>
+                <div class="app-card">
+                  <div class="ac-head"><span class="ac-title">Statement</span><span class="ac-meta">₹ lakh</span></div>
+                  <table class="pl">
+                    <tbody>
+                      <tr class="pl-grp"><td>Revenue</td><td>48.60</td></tr>
+                      <tr class="pl-sub"><td>Food sales</td><td>41.20</td></tr>
+                      <tr class="pl-sub"><td>Beverage sales</td><td>7.40</td></tr>
+                      <tr class="pl-grp"><td>Cost of goods sold</td><td>(15.20)</td></tr>
+                      <tr class="pl-total"><td>Gross profit</td><td>33.40</td></tr>
+                      <tr class="pl-grp"><td>Operating expenses</td><td>(20.60)</td></tr>
+                      <tr class="pl-sub"><td>Labor</td><td>(11.70)</td></tr>
+                      <tr class="pl-sub"><td>Rent &amp; utilities</td><td>(6.10)</td></tr>
+                      <tr class="pl-sub"><td>Other operating</td><td>(2.80)</td></tr>
+                      <tr class="pl-net"><td>Net operating income</td><td>12.80</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="app-card">
+                  <div class="ac-head"><span class="ac-title">Journal entries</span><span class="ac-meta">Posted from operations</span></div>
+                  <table class="mtable je">
+                    <thead><tr><th>Entry</th><th>Description</th><th>Source</th><th class="num">Amount</th></tr></thead>
+                    <tbody>
+                      <tr><td><b>JE-4821</b></td><td>Daily sales summary · 30 Sep</td><td><span class="src src-pos">POS</span></td><td class="num">₹1,84,250</td></tr>
+                      <tr><td><b>JE-4822</b></td><td>Stock consumption · 30 Sep</td><td><span class="src src-inv">Inventory</span></td><td class="num">₹58,960</td></tr>
+                      <tr><td><b>JE-4823</b></td><td>Waste write-off · Produce</td><td><span class="src src-inv">Inventory</span></td><td class="num">₹1,240</td></tr>
+                      <tr><td><b>JE-4824</b></td><td>Payroll accrual · September</td><td><span class="src src-pay">Payroll</span></td><td class="num">₹11,70,000</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================== AI ==================================== -->
+<section class="section ai" id="ai" aria-labelledby="ai-title">
+  <div class="ai-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow eyebrow--ai"><svg class="i" aria-hidden="true"><use href="#i-sparkles"/></svg>VeeBites Intelligence</p>
+      <h2 class="h2" id="ai-title">Turn Restaurant Data Into Useful Answers.</h2>
+      <p class="lead">Use AI-assisted reporting, analysis, forecasting, OCR-style imports, and smart data extraction to simplify operational workflows.</p>
+    </div>
+
+    <div class="ai-grid">
+      <div class="ai-app" data-reveal>
+        <div class="ai-app-inner">
+          <div class="ai-top">
+            <span class="ai-title"><span class="ai-spark"><svg class="i" aria-hidden="true"><use href="#i-sparkles"/></svg></span>VeeBites Assistant</span>
+            <span class="ai-ctx">Main Branch · September 2026</span>
+            <span class="demo-chip demo-chip--dark">Demo data</span>
+          </div>
+
+          <div class="ai-body">
+            <div class="ai-q" aria-live="polite"><span class="app-avatar av-sm">AK</span><p data-ai-question>Which products generated the most revenue this month?</p></div>
+
+            <div class="ai-answer" data-ai-answer>
+              <div class="ai-a-head"><span class="ai-spark ai-spark--sm"><svg class="i" aria-hidden="true"><use href="#i-sparkles"/></svg></span><span>Answer</span></div>
+              <p class="ai-a-text" data-ai-text>Chicken Biryani generated the most revenue this month — ₹4.62L, about 11% of food sales. The top five dishes together account for just over a third of food revenue.</p>
+              <div class="ai-chart-wrap">
+                <div class="ai-chart-h" data-ai-chart-title>Revenue by product · top 5</div>
+                <div class="ai-chart-legend" data-ai-legend hidden></div>
+                <div class="chart chart--dark" data-ai-chart></div>
+              </div>
+              <ul class="ai-points" data-ai-points>
+                <li>Biryani sales peak during Friday and Saturday dinner service.</li>
+                <li>Paneer Tikka grew the most compared with August.</li>
+              </ul>
+              <p class="ai-foot"><svg class="i" aria-hidden="true"><use href="#i-database"/></svg><span data-ai-source>Based on VeeBites sales data · 1–30 Sep</span><span class="ai-foot-sep">·</span>AI-generated — review before acting on it.</p>
+            </div>
+
+            <div class="ai-suggest" role="tablist" aria-label="Example questions" data-ai-tabs>
+              <button type="button" role="tab" aria-selected="true" data-q="0">Which products generated the most revenue this month?</button>
+              <button type="button" role="tab" aria-selected="false" data-q="1" tabindex="-1">Which days had the highest sales?</button>
+              <button type="button" role="tab" aria-selected="false" data-q="2" tabindex="-1">Which ingredients have the highest waste?</button>
+              <button type="button" role="tab" aria-selected="false" data-q="3" tabindex="-1">How did labor cost change compared with last month?</button>
+            </div>
+
+            <div class="ai-input" aria-hidden="true"><span>Ask about sales, stock, staff, or costs…</span><span class="ai-send"><svg class="i"><use href="#i-send"/></svg></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-side">
+        <ul class="ai-caps">
+          <li data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-file-text"/></svg></span><div><b>AI-assisted reporting</b><span>Ask questions in plain language and get a report-ready answer.</span></div></li>
+          <li data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg></span><div><b>Analysis</b><span>Compare periods, products, stations, and locations.</span></div></li>
+          <li data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-trend"/></svg></span><div><b>Forecasting</b><span>Look ahead at demand to plan prep, stock, and staffing.</span></div></li>
+          <li data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-scan"/></svg></span><div><b>OCR-style imports &amp; data extraction</b><span>Pull line items from supplier invoices and documents for review.</span></div></li>
+        </ul>
+
+        <div class="ocr" data-reveal aria-hidden="true">
+          <div class="ocr-h"><svg class="i"><use href="#i-file-check"/></svg><b>supplier_invoice_0923.pdf</b><span class="pill pill--new">Extracted</span></div>
+          <dl class="ocr-fields">
+            <div><dt>Supplier</dt><dd>Northside Dairy</dd></div>
+            <div><dt>Invoice no.</dt><dd>ND-55812</dd></div>
+            <div><dt>Date</dt><dd>23 Sep 2026</dd></div>
+            <div><dt>Line items</dt><dd>12</dd></div>
+            <div><dt>Total</dt><dd>₹38,420</dd></div>
+          </dl>
+          <div class="ocr-foot"><span>Review before import</span><span class="mbtn mbtn--accent">Review &amp; import</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== MULTI-LOCATION ============================== -->
+<section class="section" id="locations" aria-labelledby="ml-title">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow">Multi-location</p>
+      <h2 class="h2" id="ml-title">One Restaurant Today. Multiple Locations Tomorrow.</h2>
+      <p class="lead">Support centralized visibility across locations while maintaining local operational workflows.</p>
+    </div>
+
+    <div class="ml" data-reveal>
+      <div class="ml-hq">
+        <span class="icon-box icon-box--dark"><svg class="i" aria-hidden="true"><use href="#i-building"/></svg></span>
+        <div class="ml-hq-txt"><b>VeeBites HQ</b><span>Centralized visibility</span></div>
+        <ul class="ml-hq-tags"><li>Consolidated reports</li><li>Menu &amp; pricing</li><li>Stock overview</li><li>People &amp; payroll</li></ul>
+      </div>
+      <div class="ml-trunk" aria-hidden="true"></div>
+      <div class="ml-sync"><svg class="i" aria-hidden="true"><use href="#i-sync"/></svg>Optional sync service</div>
+      <div class="ml-branches" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="ml-stores">
+        <div class="ml-store">
+          <div class="ml-store-h"><span class="icon-box icon-box--sm"><svg class="i" aria-hidden="true"><use href="#i-store"/></svg></span><div><b>Store 01</b><span>City Centre</span></div><span class="live-dot">Live</span></div>
+          <ul><li><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg>POS</li><li><svg class="i" aria-hidden="true"><use href="#i-chef"/></svg>Kitchen</li><li><svg class="i" aria-hidden="true"><use href="#i-box"/></svg>Inventory</li></ul>
+        </div>
+        <div class="ml-store">
+          <div class="ml-store-h"><span class="icon-box icon-box--sm"><svg class="i" aria-hidden="true"><use href="#i-store"/></svg></span><div><b>Store 02</b><span>Airport Road</span></div><span class="live-dot">Live</span></div>
+          <ul><li><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg>POS</li><li><svg class="i" aria-hidden="true"><use href="#i-chef"/></svg>Kitchen</li><li><svg class="i" aria-hidden="true"><use href="#i-box"/></svg>Inventory</li></ul>
+        </div>
+        <div class="ml-store">
+          <div class="ml-store-h"><span class="icon-box icon-box--sm"><svg class="i" aria-hidden="true"><use href="#i-store"/></svg></span><div><b>Store 03</b><span>Tech Park</span></div><span class="live-dot">Live</span></div>
+          <ul><li><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg>POS</li><li><svg class="i" aria-hidden="true"><use href="#i-chef"/></svg>Kitchen</li><li><svg class="i" aria-hidden="true"><use href="#i-box"/></svg>Inventory</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <ul class="ml-notes">
+      <li data-reveal><b>Local workflows at every store</b><span>Each location runs its own POS, kitchen, and inventory operations.</span></li>
+      <li data-reveal><b>Centralized visibility</b><span>Review performance across locations from one place.</span></li>
+      <li data-reveal><b>Optional sync service</b><span>Cross-location reporting is supported through VeeBites' optional synchronization service.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =============================== INTEGRATIONS =============================== -->
+<section class="section section--paper" id="integrations" aria-labelledby="int-title">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Integrations</p>
+      <h2 class="h2" id="int-title">Connect VeeBites With the Tools You Already Use.</h2>
+      <p class="lead">Supported integrations and synchronization workflows keep external systems in step with the restaurant — with health checks and an outbound queue you can see.</p>
+    </div>
+
+    <div class="split split--int">
+      <div class="fgrid fgrid--2">
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span><h3>QuickBooks</h3><p>Accounting sync for entries and financial records.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-card"/></svg></span><h3>Payment gateways</h3><p>Card and digital payments at the counter and table.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-bike"/></svg></span><h3>Delivery aggregators</h3><p>Bring online orders into the same kitchen flow.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg></span><h3>Fiscal invoice services</h3><p>Connect with supported invoicing services where required.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-box"/></svg></span><h3>Inventory systems</h3><p>Keep stock and purchasing data in sync.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-activity"/></svg></span><h3>Logging &amp; monitoring</h3><p>Operational visibility into system activity.</p></div>
+      </div>
+
+      <div class="split-visual" data-reveal>
+        <div class="mock-scroll" data-mock-scroll>
+          <div class="mock health" style="--mw:36" data-health role="img" aria-label="Integration health dashboard: QuickBooks connected, payment gateway healthy, delivery sync healthy, inventory sync processing, invoice service connected; plus outbound sync queue and provider health checks — demo data.">
+            <div class="app">
+              <div class="app-top">
+                <div class="app-brand"><svg aria-hidden="true"><use href="#logo-mark"/></svg><b>Integrations</b></div>
+                <span class="app-sep"></span>
+                <span class="app-crumb">Health</span>
+                <div class="app-top-r"><span class="demo-chip">Demo data</span><span class="ac-meta">Checked 30s ago</span></div>
+              </div>
+              <div class="app-main">
+                <div class="app-card">
+                  <ul class="hl">
+                    <li><span class="hl-i"><svg class="i"><use href="#i-book"/></svg></span><b>QuickBooks</b><em>Last sync 2m ago</em><span class="st st--ok">Connected</span></li>
+                    <li><span class="hl-i"><svg class="i"><use href="#i-card"/></svg></span><b>Payment Gateway</b><em>Last event 14s ago</em><span class="st st--ok">Healthy</span></li>
+                    <li><span class="hl-i"><svg class="i"><use href="#i-bike"/></svg></span><b>Delivery Sync</b><em>Last order 3m ago</em><span class="st st--ok">Healthy</span></li>
+                    <li data-health-row><span class="hl-i"><svg class="i"><use href="#i-box"/></svg></span><b>Inventory Sync</b><em data-health-meta>Batch 3 of 5</em><span class="st st--proc" data-health-status>Processing</span></li>
+                    <li><span class="hl-i"><svg class="i"><use href="#i-file-check"/></svg></span><b>Invoice Service</b><em>Last invoice 6m ago</em><span class="st st--ok">Connected</span></li>
+                  </ul>
+                </div>
+                <div class="health-grid">
+                  <div class="app-card">
+                    <div class="ac-head"><span class="ac-title">Outbound sync queue</span></div>
+                    <div class="q-stats">
+                      <div><b data-q-queued>8</b><span>Queued</span></div>
+                      <div><b data-q-proc>2</b><span>Processing</span></div>
+                      <div><b>1</b><span>Retrying</span></div>
+                    </div>
+                    <ul class="q-list">
+                      <li><span class="st-dot st-dot--proc"></span><b>Journal export</b><em>→ QuickBooks</em></li>
+                      <li><span class="st-dot"></span><b>Menu update</b><em>→ Delivery</em></li>
+                      <li><span class="st-dot st-dot--ok"></span><b>INV-2291</b><em>→ Invoice</em></li>
+                    </ul>
+                  </div>
+                  <div class="app-card">
+                    <div class="ac-head"><span class="ac-title">Provider health checks</span></div>
+                    <ul class="hc">
+                      <li><span>Payments</span><i class="hc-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></i></li>
+                      <li><span>Delivery</span><i class="hc-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></i></li>
+                      <li><span>Inventory</span><i class="hc-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i class="w"></i><i></i><i></i><i></i></i></li>
+                      <li><span>Invoicing</span><i class="hc-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></i></li>
+                    </ul>
+                    <span class="ac-meta">Last 10 checks</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================= SECURITY ================================= -->
+<section class="section" id="security" aria-labelledby="sec-title">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Security &amp; control</p>
+      <h2 class="h2" id="sec-title">Built for Controlled Restaurant Operations.</h2>
+      <p class="lead">Decide who can do what, require approval for sensitive actions, and keep a record of what happened.</p>
+    </div>
+
+    <div class="split split--mock-left">
+      <div class="split-visual" data-reveal>
+        <div class="mock-scroll" data-mock-scroll>
+          <div class="mock secm" style="--mw:36" role="img" aria-label="Manager approval prompt for voiding an item, and an audit log listing approvals, discounts, session locks, rate-limited sign-in attempts, and role changes — demo data.">
+            <div class="app approve">
+              <div class="approve-h"><span class="approve-lock"><svg class="i"><use href="#i-lock"/></svg></span><div><b>Manager approval required</b><span>Void item on order #1042</span></div></div>
+              <dl class="approve-d">
+                <div><dt>Item</dt><dd>Paneer Tikka × 1</dd></div>
+                <div><dt>Amount</dt><dd>₹280</dd></div>
+                <div><dt>Requested by</dt><dd>Farah S. · Cashier</dd></div>
+                <div><dt>Reason</dt><dd>Customer changed order</dd></div>
+              </dl>
+              <div class="approve-pin"><span>Manager PIN</span><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+              <div class="approve-a"><span class="mbtn">Decline</span><span class="mbtn mbtn--dark">Approve</span></div>
+            </div>
+            <div class="app audit">
+              <div class="ac-head"><span class="ac-title">Audit log</span><span class="demo-chip">Demo data</span></div>
+              <ul class="audit-list">
+                <li><em>13:42</em><span class="au-i au-good"><svg class="i"><use href="#i-user-check"/></svg></span><div><b>Void approved</b><span>A. Kumar (Manager) · #1042 · POS-1</span></div></li>
+                <li><em>13:40</em><span class="au-i"><svg class="i"><use href="#i-tag"/></svg></span><div><b>Discount 10% applied</b><span>Farah S. · #1041 · POS-2</span></div></li>
+                <li><em>13:31</em><span class="au-i"><svg class="i"><use href="#i-lock"/></svg></span><div><b>Session locked · idle</b><span>Terminal POS-3</span></div></li>
+                <li><em>13:05</em><span class="au-i au-warn"><svg class="i"><use href="#i-alert"/></svg></span><div><b>Sign-in attempts rate-limited</b><span>Security alert · Web login</span></div></li>
+                <li><em>12:58</em><span class="au-i"><svg class="i"><use href="#i-key"/></svg></span><div><b>Role updated · Shift lead</b><span>A. Kumar · Admin console</span></div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fgrid fgrid--2">
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-key"/></svg></span><h3>Role-Based Access</h3><p>Control module access by role.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-user-check"/></svg></span><h3>Manager Approvals</h3><p>Protect sensitive operations with approval workflows.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>Session Security</h3><p>Session locking and logout controls.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Login Protection</h3><p>Rate limiting for authentication endpoints.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-file-text"/></svg></span><h3>Audit Logging</h3><p>Maintain visibility into important system actions.</p></div>
+        <div class="fcard" data-reveal><span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></span><h3>Security Alerts</h3><p>Surface relevant security events.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== WHO IT'S FOR =============================== -->
+<section class="section section--paper" id="solutions" aria-labelledby="who-title">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow">Solutions</p>
+      <h2 class="h2" id="who-title">Who Is VeeBites For?</h2>
+      <p class="lead">Different service models, one connected platform.</p>
+    </div>
+    <div class="who-grid">
+      <article class="who" data-reveal>
+        <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-utensils"/></svg></span>
+        <h3>Restaurants</h3><p>Dining, kitchen, payments, stock, finance.</p>
+        <ul class="tags"><li>Tables</li><li>KDS</li><li>Inventory</li><li>Accounting</li></ul>
+      </article>
+      <article class="who" data-reveal>
+        <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-coffee"/></svg></span>
+        <h3>Cafes</h3><p>Fast counter-service workflows.</p>
+        <ul class="tags"><li>Quick ordering</li><li>Modifiers</li><li>Order display</li></ul>
+      </article>
+      <article class="who" data-reveal>
+        <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-cloud"/></svg></span>
+        <h3>Cloud Kitchens</h3><p>High-volume kitchen and delivery operations.</p>
+        <ul class="tags"><li>KDS</li><li>Delivery sync</li><li>Recipes</li></ul>
+      </article>
+      <article class="who" data-reveal>
+        <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-monitor"/></svg></span>
+        <h3>Food Courts</h3><p>High-throughput ordering and customer displays.</p>
+        <ul class="tags"><li>Order display</li><li>Order status</li><li>Fast checkout</li></ul>
+      </article>
+      <article class="who" data-reveal>
+        <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg></span>
+        <h3>Multi-Floor Restaurants</h3><p>Floor plans and table management.</p>
+        <ul class="tags"><li>Floor plans</li><li>Table status</li><li>Covers</li></ul>
+      </article>
+      <article class="who" data-reveal>
+        <span class="icon-box"><svg class="i" aria-hidden="true"><use href="#i-network"/></svg></span>
+        <h3>Growing Restaurant Groups</h3><p>Centralized visibility across locations.</p>
+        <ul class="tags"><li>Multi-location sync</li><li>Central reports</li><li>Integrations</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FEATURE MATRIX ============================== -->
+<section class="section" id="capabilities" aria-labelledby="matrix-title">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow">Capabilities</p>
+      <h2 class="h2" id="matrix-title">Everything in One Platform.</h2>
+    </div>
+    <div class="matrix" data-reveal>
+      <div class="mx-col">
+        <h3>Front of house</h3>
+        <ul>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Restaurant POS</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Table Management</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Customer Order Display</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Offline-First Ordering</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Local Printer Support</li>
+        </ul>
+      </div>
+      <div class="mx-col">
+        <h3>Kitchen &amp; stock</h3>
+        <ul>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Kitchen Display</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Inventory</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Recipes &amp; Production</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Waste Management</li>
+        </ul>
+      </div>
+      <div class="mx-col">
+        <h3>Back office &amp; insight</h3>
+        <ul>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>HR &amp; Payroll</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Accounting</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>AI-Assisted Analytics</li>
+        </ul>
+      </div>
+      <div class="mx-col">
+        <h3>Platform &amp; control</h3>
+        <ul>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Multi-Location Sync</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>External Integrations</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Role-Based Access</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Audit Logging</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================== PRICING ================================== -->
+<section class="section section--paper" id="pricing" aria-labelledby="pricing-title">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-reveal>
+      <p class="eyebrow">Pricing</p>
+      <h2 class="h2" id="pricing-title">Plans That Grow With Your Operation.</h2>
+      <p class="lead">Pricing depends on your outlets, modules, and devices. Talk to our team for a quote tailored to how you operate.</p>
+    </div>
+    <div class="plans">
+      <article class="plan" data-reveal>
+        <span class="plan-tier">Starter</span>
+        <p class="plan-desc">Essential POS and restaurant operations.</p>
+        <span class="plan-price">Custom pricing</span>
+        <a class="btn btn-secondary btn-block" href="#demo" data-demo>Talk to Sales</a>
+        <ul class="plan-list">
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>POS ordering &amp; billing</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Tables &amp; floor plans</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Kitchen tickets &amp; printing</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Payments, discounts &amp; taxes</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Offline-first front of house</li>
+        </ul>
+      </article>
+      <article class="plan plan--feature" data-reveal>
+        <span class="plan-flag">For growing operations</span>
+        <span class="plan-tier">Growth</span>
+        <p class="plan-desc">Advanced kitchen, inventory, reporting, and workforce capabilities.</p>
+        <span class="plan-price">Custom pricing</span>
+        <a class="btn btn-primary btn-block" href="#demo" data-demo>Talk to Sales</a>
+        <ul class="plan-list">
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Kitchen display &amp; stations</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Inventory, recipes &amp; production</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Reporting &amp; dashboards</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Staff, attendance &amp; payroll</li>
+        </ul>
+      </article>
+      <article class="plan" data-reveal>
+        <span class="plan-tier">Scale</span>
+        <p class="plan-desc">Multi-location operations, integrations, advanced analytics, and centralized management.</p>
+        <span class="plan-price">Custom pricing</span>
+        <a class="btn btn-secondary btn-block" href="#demo" data-demo>Talk to Sales</a>
+        <ul class="plan-list">
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Multi-location sync</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Third-party integrations</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Advanced &amp; AI-assisted analytics</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Centralized management</li>
+        </ul>
+      </article>
+    </div>
+    <p class="plans-note">Plan contents are indicative. Your quote is tailored to the modules, outlets, and devices you need.</p>
+  </div>
+</section>
+
+<!-- ==================================== FAQ ==================================== -->
+<section class="section" id="faq" aria-labelledby="faq-title">
+  <div class="container faq-wrap">
+    <div class="sec-head faq-head" data-reveal>
+      <p class="eyebrow">FAQ</p>
+      <h2 class="h2" id="faq-title">Questions, Answered.</h2>
+      <p class="lead">Can't find what you're looking for? <a href="#demo" data-demo>Talk to our team</a>.</p>
+    </div>
+    <div class="faq" data-reveal>
+      <details class="qa" name="faq" open>
+        <summary>Does VeeBites work without internet?<span class="qa-ic" aria-hidden="true"></span></summary>
+        <div class="qa-a"><p>VeeBites is designed with offline-first front-of-house workflows. If the network drops, essential ordering can continue locally, and queued changes synchronize when connectivity returns. Capabilities that rely on connected services — such as external integrations, cross-location reporting, and AI-assisted analysis — resume once you're back online.</p></div>
+      </details>
+      <details class="qa" name="faq">
+        <summary>Can VeeBites manage tables?<span class="qa-ic" aria-hidden="true"></span></summary>
+        <div class="qa-a"><p>Yes — floors, table layouts, occupancy, covers, and table-linked orders.</p></div>
+      </details>
+      <details class="qa" name="faq">
+        <summary>Does VeeBites include a kitchen display?<span class="qa-ic" aria-hidden="true"></span></summary>
+        <div class="qa-a"><p>Yes — live tickets, station workflows, preparation status, dish counts, and prep-time monitoring.</p></div>
+      </details>
+      <details class="qa" name="faq">
+        <summary>Can VeeBites print kitchen tickets?<span class="qa-ic" aria-hidden="true"></span></summary>
+        <div class="qa-a"><p>Yes — through supported local printer infrastructure. VeeBites can print KOTs, bills, receipts, delivery slips, refunds, and summaries.</p></div>
+      </details>
+      <details class="qa" name="faq">
+        <summary>Does VeeBites include inventory?<span class="qa-ic" aria-hidden="true"></span></summary>
+        <div class="qa-a"><p>Yes — stock, suppliers, purchases, returns, waste, adjustments, transfers, recipes, production, and reconciliation.</p></div>
+      </details>
+      <details class="qa" name="faq">
+        <summary>Does VeeBites include accounting?<span class="qa-ic" aria-hidden="true"></span></summary>
+        <div class="qa-a"><p>Yes — chart of accounts, journals, ledger, trial balance, P&amp;L, balance sheet, cash flow, and statements.</p></div>
+      </details>
+      <details class="qa" name="faq">
+        <summary>Can VeeBites manage employees and payroll?<span class="qa-ic" aria-hidden="true"></span></summary>
+        <div class="qa-a"><p>Yes. VeeBites covers employee profiles, departments and positions, attendance, scheduling, leave and holidays, pay profiles and rules, payroll periods, and payroll runs.</p></div>
+      </details>
+      <details class="qa" name="faq">
+        <summary>Can VeeBites integrate with other software?<span class="qa-ic" aria-hidden="true"></span></summary>
+        <div class="qa-a"><p>Yes — through supported integrations and synchronization workflows, including accounting, payment gateways, delivery aggregators, fiscal invoice services, inventory systems, and logging and monitoring.</p></div>
+      </details>
+      <details class="qa" name="faq">
+        <summary>Does VeeBites support multiple locations?<span class="qa-ic" aria-hidden="true"></span></summary>
+        <div class="qa-a"><p>Yes, through its synchronization architecture and optional sync service. Each location keeps its local workflows, and cross-location reporting is available through the sync service.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================================= FINAL CTA ================================= -->
+<section class="final" id="demo" aria-labelledby="final-title">
+  <div class="final-bg" aria-hidden="true"></div>
+  <div class="container final-inner" data-reveal>
+    <h2 class="final-title" id="final-title">Your Restaurant Has Enough Moving Parts.<span>Your Software Shouldn't Be One of Them.</span></h2>
+    <p class="final-sub">Bring orders, kitchen, inventory, people, payments, accounts, and analytics into one connected restaurant platform.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary btn-lg" href="#demo" data-demo>Book a Demo <svg class="i i-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+      <a class="btn btn-ghost-dark btn-lg" href="#platform">Explore VeeBites</a>
+    </div>
+    <ol class="flow-ribbon flow-ribbon--final" aria-hidden="true">
+      <li><svg class="i"><use href="#i-receipt"/></svg>Orders</li>
+      <li><svg class="i"><use href="#i-chef"/></svg>Kitchen</li>
+      <li><svg class="i"><use href="#i-card"/></svg>Payments</li>
+      <li><svg class="i"><use href="#i-box"/></svg>Inventory</li>
+      <li><svg class="i"><use href="#i-users"/></svg>People</li>
+      <li><svg class="i"><use href="#i-landmark"/></svg>Accounting</li>
+      <li><svg class="i"><use href="#i-chart"/></svg>Analytics</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<!-- ================================== FOOTER ================================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="#top" aria-label="VeeBites — back to top"><img class="brand-logo brand-logo--lg" src="assets/img/veebites-logo.png" alt="VeeBites" width="158" height="40" loading="lazy"></a>
+        <p>Complete restaurant operations, connected in one platform.</p>
+        <a class="btn btn-primary btn-sm" href="#demo" data-demo>Book a Demo</a>
+      </div>
+      <nav class="footer-cols" aria-label="Footer">
+        <div>
+          <h3>Product</h3>
+          <ul>
+            <li><a href="#features">POS</a></li>
+            <li><a href="#top">Tables</a></li>
+            <li><a href="#kitchen">Kitchen</a></li>
+            <li><a href="#inventory">Inventory</a></li>
+            <li><a href="#people">HR &amp; Payroll</a></li>
+            <li><a href="#accounting">Accounting</a></li>
+            <li><a href="#analytics">Reports</a></li>
+            <li><a href="#ai">AI</a></li>
+            <li><a href="#integrations">Integrations</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Company</h3>
+          <ul><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li><li><a href="#careers">Careers</a></li><li><a href="#partners">Partners</a></li></ul>
+        </div>
+        <div>
+          <h3>Resources</h3>
+          <ul><li><a href="#docs">Documentation</a></li><li><a href="#help">Help Center</a></li><li><a href="#updates">Product Updates</a></li><li><a href="#api">API / Integrations</a></li></ul>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <ul><li><a href="#privacy">Privacy</a></li><li><a href="#terms">Terms</a></li><li><a href="#security">Security</a></li><li><a href="#dpa">Data Processing</a></li></ul>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <ul><li><a href="#demo" data-demo>Sales</a></li><li><a href="#support">Support</a></li><li><a href="#demo" data-demo>Demo</a></li></ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> VeeBites. All rights reserved.</span>
+      <span>Product visuals on this page use illustrative demo data.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile sticky CTA -->
+<div class="mobile-cta" data-mobile-cta aria-hidden="true">
+  <a class="btn btn-primary btn-lg" href="#demo" data-demo tabindex="-1">Book a Demo</a>
+</div>
+
+<!-- ================================ DEMO DIALOG ================================ -->
+<dialog class="demo-dialog" id="demo-dialog" aria-labelledby="demo-dialog-title" data-demo-dialog>
+  <div class="dd">
+    <button class="dd-close" type="button" aria-label="Close" data-demo-close><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+    <div class="dd-body" data-demo-form-wrap>
+      <p class="eyebrow">Book a demo</p>
+      <h2 id="demo-dialog-title">See VeeBites running your operation.</h2>
+      <p class="dd-sub">Tell us a little about your restaurant and we'll set up a walkthrough of the modules that matter to you.</p>
+      <!-- Set data-endpoint to your form handler (e.g. a CRM or serverless function) to submit leads. -->
+      <form class="dd-form" data-demo-form data-endpoint="" novalidate>
+        <div class="field"><label for="dd-name">Full name</label><input id="dd-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="dd-email">Work email</label><input id="dd-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="dd-phone">Phone</label><input id="dd-phone" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="field"><label for="dd-company">Restaurant or group</label><input id="dd-company" name="company" type="text" autocomplete="organization" required></div>
+        <div class="field"><label for="dd-type">Business type</label>
+          <select id="dd-type" name="type"><option>Restaurant</option><option>Cafe</option><option>Cloud kitchen</option><option>Food court</option><option>Multi-floor restaurant</option><option>Restaurant group</option></select>
+        </div>
+        <div class="field"><label for="dd-loc">Locations</label>
+          <select id="dd-loc" name="locations"><option>1</option><option>2–5</option><option>6–20</option><option>20+</option></select>
+        </div>
+        <div class="field field--full"><label for="dd-msg">What would you like to see? <span>(optional)</span></label><textarea id="dd-msg" name="message" rows="3"></textarea></div>
+        <p class="dd-error" data-demo-error role="alert" hidden></p>
+        <button class="btn btn-primary btn-lg btn-block field--full" type="submit">Request demo</button>
+      </form>
+    </div>
+    <div class="dd-done" data-demo-done hidden>
+      <span class="dd-done-ic"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+      <h2>Thanks — we'll be in touch.</h2>
+      <p>Our team will reach out to schedule your VeeBites walkthrough.</p>
+      <button class="btn btn-secondary" type="button" data-demo-close>Close</button>
+    </div>
+  </div>
+</dialog>
+
+</body>
+</html>
