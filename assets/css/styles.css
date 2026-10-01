@@ -1921,6 +1921,123 @@ table { border-collapse: collapse; }
   .dd h2 { font-size: 24px; }
 }
 
+/* ------------------------------------------------------------------
+   Phones: product mockups stop scaling down and reflow into phone
+   layouts at a readable size (no sideways swiping, no tiny text).
+   ------------------------------------------------------------------ */
+@media (max-width: 719px) {
+  .mock-scroll { overflow: visible; padding-bottom: 0; margin-bottom: 0; }
+  .mock, .hero .mock { width: 100%; font-size: 16px; }
+  .scroll-hint { display: none !important; }
+
+  /* Shared app chrome */
+  .app-body { grid-template-columns: minmax(0, 1fr); }
+  .app-rail { display: none; }
+  .app-main { padding: .875em; gap: .75em; }
+  .app-top { gap: .625em; padding: 0 .875em; }
+  .app-top .seg, .app-top .app-ibtn, .app-top .app-clock, .app-top .mbtn,
+  .app-top .app-avatar, .app-top .ac-meta, .app-top .app-sep, .app-crumb-dim { display: none; }
+  .app-top-r { margin-left: auto; }
+  .app-card { padding: .875em; }
+  .ac-head { flex-wrap: wrap; row-gap: .5em; }
+  .kpi-row--6, .kpi-row--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .625em; }
+  .kpi-row--3 { gap: .5em; }
+  .kpi-row--3 .kpi-label { white-space: normal; }
+  .kpi { padding: .75em .875em; }
+
+  /* Hero dashboard: floor plan + live orders */
+  .hero-stage { padding: 0; }
+  .hm-head-r .seg { display: none; }
+  .hm-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "floor" "orders"; }
+  .hm-kitchen, .hm-side { display: none; }
+  .hm-orders .ol li:nth-child(n+4) { display: none; }
+  .fp { min-height: 13.5em; }
+  .tb small { display: none; }
+  .fp-legend { gap: .45em 1em; }
+
+  /* POS: category chips, dish grid, then the cart */
+  .pos-body { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .pos-cats {
+    flex-direction: row; overflow-x: auto; scrollbar-width: none;
+    padding: .625em .875em; border-right: 0; border-bottom: 1px solid var(--app-line);
+  }
+  .pos-cats::-webkit-scrollbar { display: none; }
+  .pos-cats span { flex: none; }
+  .pos-grid .dish:nth-child(n+7) { display: none; }
+  .pos-cart { border-left: 0; border-top: 1px solid var(--app-line); }
+  .cart-tot { margin-top: .75em; }
+  .pov-station, .pov-status, .pov-print { left: .875em; right: .875em; width: auto; }
+  .pos[data-state="order"] .pov-order { display: none; } /* would hide the dish grid; the cart shows the modifiers */
+  .pov-status { top: 3.75em; }
+  .pov-station { top: auto; bottom: 4.5em; }
+  .pov-print { bottom: .875em; }
+
+  /* Kitchen display: swipe between status columns, like a handheld KDS */
+  .kds .app-top { flex-wrap: wrap; height: auto; padding: .75em .875em; row-gap: .6em; }
+  .kds-stations { order: 3; flex-basis: 100%; overflow-x: auto; scrollbar-width: none; }
+  .kds-stations::-webkit-scrollbar { display: none; }
+  .kds-stations span { flex: none; }
+  .kds-stat { display: none; }
+  .kds-cols {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%;
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+    scroll-padding: 0 .875em; scrollbar-width: none; min-height: 0; padding: .875em;
+  }
+  .kds-cols::-webkit-scrollbar { display: none; }
+  .kds-col { scroll-snap-align: start; }
+
+  /* Customer order display: stacked status groups */
+  .screen-bezel { padding: 8px; border-radius: 18px; }
+  .screen-stand { height: 22px; }
+  .cod-where { display: none; }
+  .cod-clock { margin-left: auto; }
+  .cod-cols, .cod[data-status] .cod-cols { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .cod .cod-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  /* Inventory */
+  .inv-grid { grid-template-columns: minmax(0, 1fr); }
+  .inv-table .mtable th:nth-child(3), .inv-table .mtable td:nth-child(3),
+  .inv-table .mtable th:nth-child(5), .inv-table .mtable td:nth-child(5) { display: none; }
+  .mtable td .meter { width: 4.5em; }
+
+  /* Management dashboard */
+  .kpi--hero, .dash .kpi-row--4 .kpi:last-child { grid-column: 1 / -1; }
+  .dash-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "trend" "type" "hourly" "mix" "side"; }
+  .dash-side { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* People: the weekly schedule scrolls inside its card */
+  .sched-scroll { overflow-x: auto; margin-inline: -.875em; padding: 0 .875em .25em; scrollbar-width: thin; }
+  .sched { min-width: 31em; }
+  .hr-bottom { grid-template-columns: minmax(0, 1fr); }
+
+  /* Accounting */
+  .je th:nth-child(2), .je td:nth-child(2) { display: none; }
+
+  /* Integration health */
+  .hl li { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .hl em { display: none; }
+  .health-grid { grid-template-columns: minmax(0, 1fr); }
+
+  /* Hero module flow: one swipeable row instead of being hidden */
+  .flow-ribbon {
+    display: flex; flex-wrap: nowrap; justify-content: flex-start; gap: 0;
+    width: calc(100% + 32px); margin: 32px -16px 0; padding: 2px 16px 6px;
+    overflow-x: auto; scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 28px), transparent);
+  }
+  .flow-ribbon::-webkit-scrollbar { display: none; }
+  .flow-ribbon li { flex: none; }
+  .flow-ribbon li:not(:last-child) { margin-right: 26px; }
+  .flow-ribbon li:not(:last-child)::before, .flow-ribbon li:not(:last-child)::after { display: block; }
+  .flow-ribbon--final { display: none; }
+
+  /* Comfortable touch targets */
+  .segctl button { min-height: 44px; }
+  .footer-cols a { display: inline-block; padding: 6px 0; }
+  .footer-cols li + li { margin-top: 2px; }
+}
+
 @media (max-width: 380px) {
   .nav-actions .btn-sm { display: none; }
 }

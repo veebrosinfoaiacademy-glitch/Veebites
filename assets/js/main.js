@@ -125,7 +125,10 @@
     sc.classList.toggle('is-scrollable', sc.scrollWidth > sc.clientWidth + 2);
   });
   let resizeTimer;
+  let lastWidth = window.innerWidth;
   window.addEventListener('resize', () => {
+    if (window.innerWidth === lastWidth) return;
+    lastWidth = window.innerWidth;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => { checkScrollers(); renderFluidCharts(); }, 150);
   });
@@ -525,7 +528,8 @@
       t.textContent = opts.tick(v);
     }
     labels.forEach((lab, i) => {
-      if (i % 2 && i !== labels.length - 1) return;
+      const lastIdx = labels.length - 1;
+      if (i !== lastIdx && (i % 2 || i === lastIdx - 1)) return; // every other day; never crowd the last label
       const t = svg('text', { x: X(i), y: H - 6, 'font-size': fs, 'text-anchor': 'middle' }, sv);
       t.textContent = lab.replace(' Sep', '');
     });
@@ -552,7 +556,7 @@
     hit.addEventListener('pointerleave', () => { xh.classList.remove('on'); dot.setAttribute('opacity', 0); tip.hide(); });
     el.replaceChildren(sv);
     tip = makeTip(el);
-    if (!reduceMotion) {
+    if (!reduceMotion && opts.animate !== false) {
       const len = line.getTotalLength();
       line.style.strokeDasharray = len;
       line.style.strokeDashoffset = len;
@@ -576,43 +580,47 @@
 
   $$('svg[data-spark]').forEach(sparkline);
 
-  // Charts declared in markup
-  $$('[data-chart="hbar"]').forEach((el) => {
-    const data = el.dataset.values.split(',').map((p) => { const [k, v] = p.split(':'); return [k, Number(v)]; });
-    const accent = el.hasAttribute('data-first-accent');
-    hbarChart(el, data, {
-      width: designWidth(el, 360),
-      rowH: accent ? 28 : 30,
-      format: el.dataset.format,
-      labelW: accent ? 104 : 84,
-      colors: accent ? (i) => (i === 0 ? '#F0600F' : '#B7C2D6') : () => '#2563C9',
-      label: el.closest('.app-card')?.querySelector('.ac-title')?.textContent,
+  // Charts declared in markup (redrawn when the viewport width changes)
+  function renderMockCharts() {
+    $$('[data-chart="hbar"]').forEach((el) => {
+      const data = el.dataset.values.split(',').map((p) => { const [k, v] = p.split(':'); return [k, Number(v)]; });
+      const accent = el.hasAttribute('data-first-accent');
+      hbarChart(el, data, {
+        width: designWidth(el, 360),
+        rowH: accent ? 28 : 30,
+        format: el.dataset.format,
+        labelW: accent ? 104 : 84,
+        colors: accent ? (i) => (i === 0 ? '#F0600F' : '#B7C2D6') : () => '#2563C9',
+        label: el.closest('.app-card')?.querySelector('.ac-title')?.textContent,
+      });
     });
-  });
-  $$('[data-chart="columns"]').forEach((el) => {
-    const labels = el.dataset.labels.split(',');
-    const values = el.dataset.values.split(',').map(Number);
-    const hl = Number(el.dataset.highlight);
-    columnChart(el, labels, [{ name: 'Sales', values, color: (i) => (i === hl ? '#F0600F' : '#2563C9') }], {
-      width: designWidth(el, 520), height: 180, tick: (v) => (v ? `₹${v / 1000}K` : '0'), fmt: (v) => `₹${inr(v)}`,
-      title: (l) => `${l}:00 – ${Number(l) + 1}:00`, labelIndex: hl, label: 'Hourly sales',
+    $$('[data-chart="columns"]').forEach((el) => {
+      const labels = el.dataset.labels.split(',');
+      const values = el.dataset.values.split(',').map(Number);
+      const hl = Number(el.dataset.highlight);
+      columnChart(el, labels, [{ name: 'Sales', values, color: (i) => (i === hl ? '#F0600F' : '#2563C9') }], {
+        width: designWidth(el, 520), height: 180, tick: (v) => (v ? `₹${v / 1000}K` : '0'), fmt: (v) => `₹${inr(v)}`,
+        title: (l) => `${l}:00 – ${Number(l) + 1}:00`, labelIndex: hl, label: 'Hourly sales',
+      });
     });
-  });
-  $$('[data-chart="groupbar"]').forEach((el) => {
-    const labels = el.dataset.labels.split(',');
-    const colors = ['#2563C9', '#F0600F'];
-    const series = el.dataset.series.split('|').map((s, i) => {
-      const [name, vals] = s.split(':');
-      return { name, values: vals.split(',').map(Number), color: colors[i] };
+    $$('[data-chart="groupbar"]').forEach((el) => {
+      const labels = el.dataset.labels.split(',');
+      const colors = ['#2563C9', '#F0600F'];
+      const series = el.dataset.series.split('|').map((s, i) => {
+        const [name, vals] = s.split(':');
+        return { name, values: vals.split(',').map(Number), color: colors[i] };
+      });
+      const unit = el.dataset.unit || '';
+      columnChart(el, labels, series, {
+        width: designWidth(el, 420), height: 168, padL: 34,
+        tick: (v) => (v ? `${v}K` : '0'), fmt: (v) => `${unit.replace('K', '')}${v}K`, label: 'Stock movement',
+      });
     });
-    const unit = el.dataset.unit || '';
-    columnChart(el, labels, series, {
-      width: designWidth(el, 420), height: 168, padL: 34,
-      tick: (v) => (v ? `${v}K` : '0'), fmt: (v) => `${unit.replace('K', '')}${v}K`, label: 'Stock movement',
-    });
-  });
+  }
+  renderMockCharts();
 
   // Sales / order volume trend with tabs
+  let redrawTrend = () => {};
   const trendEl = $('[data-trend]');
   if (trendEl) {
     const labels = trendEl.dataset.labels.split(',');
@@ -627,8 +635,10 @@
         tick: (v) => String(v), short: (v) => `${v}`, full: (v) => `${v} orders`, label: 'Daily orders, last 14 days',
       },
     };
-    const draw = (m) => lineChart(trendEl, labels, metrics[m].values, metrics[m]);
+    let metric = 'sales';
     let drawn = false;
+    const draw = (m, animate = true) => { metric = m; lineChart(trendEl, labels, metrics[m].values, { ...metrics[m], animate }); };
+    redrawTrend = () => { if (drawn) draw(metric, false); };
     onceVisible(trendEl, () => { drawn = true; draw('sales'); }, { threshold: 0.3 });
     const tabs = $('[data-trend-tabs]');
     if (tabs) {
@@ -757,6 +767,8 @@
   }
 
   function renderFluidCharts() {
+    renderMockCharts();
+    redrawTrend();
     if (aiChartEl) renderAiChart(aiAnswers[aiCurrent]);
   }
 
